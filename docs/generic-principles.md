@@ -54,6 +54,6 @@ Encoding: checked by `self-review-gate` cut test ("would an external maintainer 
 
 ## Planning / iteration
 
-- Phase 0 spec interview (socratic-spec) → spec.md with goal, constraints, non-goals, actors, edges, verification cmd+expected, 0 blocking Qs.
-- Phase 1 plan iteration → plan.md with observable signal per step, until converged (clean sweep across (a)..(d)).
+- Phase 1 spec interview (socratic-spec) → spec.md with goal, constraints, non-goals, actors, edges, verification cmd+expected, 0 blocking Qs.
+- Phase 2 plan iteration → plan.md with observable signal per step, until converged (clean sweep across (a)..(d)).
 - Socratic = divergent closes ambiguity, plan-iteration = convergent, asks human only on 4 triggers + missing-boundary case (see plan-iteration-gate).

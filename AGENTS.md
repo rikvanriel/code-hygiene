@@ -15,7 +15,7 @@ Obey CONTRIBUTING.md single-source principle (factual-integrity owns R0, changel
 
 ## Phase workflow — 6 phases, cumulative, nothing unloads
 
-1. **Phase 0 — project discovery:** `skills/project-discovery/SKILL.md` + `docs/references/index.md` — ~1.3k tok
+1. **Phase 0 — project discovery:** `skills/project-discovery/SKILL.md` + `docs/references/index.md`
 2. **Phase 1 — spec interview:** `skills/socratic-spec/SKILL.md` — divergent, one Q/turn, closes Open Qs → spec.md
 3. **Phase 2 — plan iteration:** `skills/plan-iteration-gate/SKILL.md` — convergent 4Q loop:
    - (a) What's wrong? — tight loops, unbounded state, stale handles, injected input, blind suppression, ambiguous ownership, no verification signal
