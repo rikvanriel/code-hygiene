@@ -1,0 +1,20 @@
+name: hygiene-check
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check hygiene
+        run: |
+          chmod +x scripts/*.sh
+          chmod +x scripts/*.py
+          ./scripts/check-hygiene.sh HEAD
+          ./scripts/install.sh --list
+          ./scripts/phases.py --phase 0
+          ./scripts/phases.py --phase 5 --profile full | head -n 100

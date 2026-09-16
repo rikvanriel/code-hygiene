@@ -18,36 +18,45 @@ Each reference entry `docs/references/<name>.md` has:
 
 ## Core vs References
 
-- Core (`skills/`): generic principles that apply almost anywhere — upstream-hygiene, factual-integrity, changelog/comment/code quality, self-review.
+- Core (`skills/`): generic principles that apply almost anywhere — upstream-hygiene, factual-integrity, changelog/comment/code quality, change splitting, debugging, self-review, plus sampling/pre-commit.
 - References (`docs/references/`): deeper tooling that is project-specific or complementary — you pull in their skill/repo on top of core.
 
-## Index (seed — flesh incrementally)
+## Index (v0.2 — 10 entries)
 
 | Entry | What it gives | License | Type |
 |-------|---------------|---------|------|
-| [superpowers](./superpowers.md) | obra's plan/TDD/debugging skills (source of our plan) | Apache-2.0 | skills repo |
-| [kernel-style-as-example](./kernel-style-as-example.md) | How kernel-style 4-phase with ID-anchored rationale works as example of strict project wrapping | MIT | example doc |
+| [superpowers](./superpowers.md) | obra's plan/TDD/debugging skills — source of our plan iteration pattern | Apache-2.0 | skills repo |
+| [kernel-style-as-example](./kernel-style-as-example.md) | How kernel-style 4-phase cumulative with ID-anchored rationale works as example wrapper for strict project | MIT | example doc |
+| [google-eng-practices](./google-eng-practices.md) | Small CLs, WHY comments, reviewer quality — reviewer-centric language | CC-BY | guide |
+| [conventional-commits](./conventional-commits.md) | conventionalcommits.org + keepachangelog + commitlint spec — subject/body specs | MIT / CC-BY | spec + linter |
+| [review-prompts](./review-prompts.md) | /kreview /kseries /kslop slash-command distribution pattern | MIT | pattern |
+| [copilot-distribution](./copilot-distribution.md) | CLAUDE.md / copilot-instructions / .cursorrules / AGENTS distribution adapter pattern | MIT | adapter |
+| [lint-chain](./lint-chain.md) | gitleaks/trufflehog secret scan + typos + editorconfig + pre-commit orchestration | MIT | pre-commit chain |
+| [stacked-pr](./stacked-pr.md) | ghstack / jj / git-branchless stacked PR tooling how it interacts with change-splitting GC-30..GC-35 | MIT | tooling |
+| [security-audit-lite](./security-audit-lite.md) | semgrep community + visible pattern lightweight pre-commit security | MIT | security |
 | template | How to add new reference | — | template |
 
-Planned (add as needed, one per PR):
+Planned next (not yet stubbed):
 
-- `google/eng-practices` — small CLs, WHY comments, review comment quality
-- `conventionalcommits.org` + `keepachangelog.com` + `commitlint` — subject/body specs many OSS enforce (map to GC- rules)
-- `masoncl/review-prompts` — `/kreview /kseries /kslop` pattern for slash-command distribution (peer-review inspiration)
-- Anthropic `CLAUDE.md` best practices, GitHub `copilot-instructions.md`, `.cursorrules` / Cursor / Continue.dev — distribution mechanisms, we provide template → adapter
-- lint/security chain: `gitleaks`/`trufflehog`, `typos`, `editorconfig`, `pre-commit` hooks
-- stacked PR: `ghstack`, `jj` (jujutsu), `git-branchless` — how change-splitting interacts
-- Language style sampling: how python-style's "sample stdlib to derive guide" method generalizes
+- Language sampling worked examples per language (once `language-style-sampling` skill dogfooded on 2 repos)
+- TouchDesigner / creative chain if needed
 
 ## How catalog skill uses this
 
-`skills/catalog/` loads this index + skill frontmatter, asks 2-3 Qs about project type, recommends core subset + 2-3 relevant references, shows checklist with TL;DR, then `scripts/install.sh --install <list>` probes agent dirs.
+`skills/catalog/` loads this index + skill frontmatter, asks 2-3 Qs about project type:
+
+1. Where code ships? (upstream PR, internal, mail list)
+2. Project has conventional commits / stacked PR / pre-commit already?
+3. Agent home where you want install? (`~/.claude/skills`, `~/.hermes/skills`, `AGENTS.md`)
+
+Recommends core subset (5-7) + 2-3 references, shows checklist with TL;DR, then `scripts/install.sh --install <list>` probes agent dirs with confirmation gate.
 
 ## Adding new reference
 
 ```bash
 cp docs/references/template.md docs/references/<new>.md
 # fill TL;DR, Provides, License, Use with, Install, When not to use, Link
-# add row to index table above
+# add row to index table above — one per PR
 # PR should include one example of skill that benefits from it
+# run ./scripts/check-hygiene.sh HEAD to ensure placeholder-only, positive framing
 ```

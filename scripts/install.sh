@@ -30,7 +30,9 @@ list_skills() {
   for d in "$SKILLS_DIR"/*/; do
     [ -f "$d/SKILL.md" ] || continue
     name="$(basename "$d")"
-    desc="$(head -n 15 "$d/SKILL.md" | grep -m1 'description:' | sed 's/.*description: *//' | tr -d '"' || echo)"
+    # handle description: may be >- multiline — read 2 lines after, strip quotes/indent
+    desc=$(awk '/^description:/{flag=1; sub(/^description:[[:space:]]*/, ""); if ($0 ~ /^>/) {getline; while ($0 ~ /^  /){gsub(/^ +/," "); printf "%s", $0; getline} print ""; exit} else {gsub(/^[ ">-]*/, ""); gsub(/"$/, ""); print; exit}}' "$d/SKILL.md" | head -c 160)
+    [ -z "$desc" ] && desc=$(grep -m1 'description:' "$d/SKILL.md" | sed 's/.*description: *//' | tr -d '"' | head -c 160)
     echo " - $name — $desc"
   done
   echo ""
