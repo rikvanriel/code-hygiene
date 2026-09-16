@@ -38,7 +38,7 @@ Before git commit, commit --amend, gh pr create, or any push of series that ship
    ./scripts/check-hygiene.sh HEAD
    ```
 
-5. Agent discovery consistency: root AGENTS.md vs templates/AGENTS.md drift? CLAUDE.md shim pointing to AGENTS.md not duplicate? Check via diff excluding docs/references index line count.
+5. Agent discovery consistency: root AGENTS.md canonical, root CLAUDE.md a short shim pointing back, generator output carrying gates (b) and (c) — verified via `./scripts/build-template.py --profile full` piped to grep, not by diffing checked-in copies (templates/ is generated and git-ignored).
 
 6. LLM tells final pass: tagline first 3 paras not defining by negation not X/...-free, no over-bulleting, no marketing robust/seamless/elegant, no hedging Notably/Importantly.
 
@@ -60,7 +60,7 @@ Never auto-skip gate as filler — if can decide with discovery within 2 searche
 
 ## 4Q on this gate itself
 
-(a) Wrong? Does check miss case that leaked before per CONTRIBUTING learnings?
+(a) Wrong? Does a check miss a case that leaked before per CONTRIBUTING learnings? **A check never seen failing is unverified — prove the red before trusting the green:** after writing or changing any scan, plant a violation and watch it fail (`./scripts/check-hygiene.sh --selftest` does this per gate in a temp tree). An earlier leak scan used an unsupported regex, errored on every run, and reported PASS indefinitely — green since birth, catching nothing.
 (b) Better way? Existing generic mechanism already checks e.g. make lint — reuse vs duplicate? State if none beats with tradeoff.
 (c) Missing? Rollback if push fails, failure notification path, observability per verification step, boundary empty repo/full disk/concurrent push, what stays out of scope, who owns failure notification.
 (d) Boundaries explicit? Which checks are org-specific private overlay ~/.config/hygiene/extra-check.sh vs public core? Scope positive: provides verification gate with explicit confirmation, not "not auto-fix" only.
