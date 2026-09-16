@@ -4,17 +4,19 @@ on:
   push:
     branches: [main]
 jobs:
-  check:
+  gates:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Check hygiene
+      - name: Prove every gate can fail
         run: |
-          chmod +x scripts/*.sh
-          chmod +x scripts/*.py
-          ./scripts/check-hygiene.sh HEAD
+          chmod +x scripts/*.sh scripts/*.py
+          ./scripts/check-hygiene.sh --selftest
+      - name: Check hygiene
+        run: ./scripts/check-hygiene.sh HEAD
+      - name: Show what an adopter sees
+        run: |
           ./scripts/install.sh --list
           ./scripts/phases.py --phase 0
-          ./scripts/phases.py --phase 5 --profile full | head -n 100

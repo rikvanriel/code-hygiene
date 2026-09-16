@@ -28,9 +28,9 @@ Core `skills/` and `docs/generic-principles.md` state rules in project-generic t
 
 ## Checks
 
-- `./scripts/check-hygiene.sh` — must PASS before commit. It runs the same class of checks the skills teach: frontmatter present, private paths in placeholder form only, core wording project-generic, rule IDs declared once, AGENTS canonical / CLAUDE shim / templates consistent, commit message free of private paths.
-- `./scripts/check-hygiene.sh --selftest` — proves the leak scan can fail (plants a deliberate leak in a temp tree and asserts it is caught). Run this after touching the scan, so a broken pattern cannot silently pass.
-- `./scripts/phases.py --phase 5 --profile full` — prints the current full-load token budget.
+- `./scripts/check-hygiene.sh` — must PASS before commit. It runs the same class of checks the skills teach: frontmatter present, private paths in placeholder form only, core wording project-generic, rule IDs declared once, AGENTS canonical / CLAUDE shim / templates consistent, no hardcoded load budgets in entry docs, commit message free of private paths.
+- `./scripts/check-hygiene.sh --selftest` — proves every gate can fail. It copies the repo to a temp tree, plants one violation per gate (private path, duplicate rule ID, hardcoded load budget, broken CLAUDE shim), and asserts the real script exits non-zero for each and still passes a clean tree. Run it after touching any scan: an earlier leak scan used an unsupported regex, errored on every run, and reported PASS indefinitely.
+- `./scripts/phases.py --phase N` — the source of truth for load budgets. Entry docs cite the script rather than restating a number, so adding a skill cannot leave the docs stale.
 
 ## Commit style
 

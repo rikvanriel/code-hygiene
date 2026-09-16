@@ -35,7 +35,7 @@ Obey CONTRIBUTING.md single-source principle (factual-integrity owns R0, changel
    Gate2 = same 4Q as plan-iteration.
 6. **Phase 5 — changelog/PR:** `changelog-quality` + `upstream-hygiene` v2.1 self-dogfoods
 
-`./scripts/phases.py --phase N [--profile minimal|full]` prints exact cat commands + token budgets. Full ~6781w ~11.5k tok.
+`./scripts/phases.py --phase N [--profile minimal|full]` prints the exact cat commands and current token budgets. Read the numbers from its output rather than from this file, so the two cannot drift apart.
 
 ## Factual integrity (R0)
 
@@ -99,7 +99,7 @@ Encoded as check: self-review-gate Gate1 (d) and llm-tells final pass flag first
 - templates/AGENTS.md + templates/CLAUDE.md — distribution copies for OTHER repos to copy from.
 - Root AGENTS.md canonical here; root CLAUDE.md thin shim pointing here.
 - scripts/install.sh probes ~/.claude/skills, ~/.hermes/skills, AGENTS.md, .cursor/, .github/ with confirmation gate, no auto-install.
-- check-hygiene.sh enforces frontmatter, placeholder-only hygiene, root ↔ templates sync.
+- check-hygiene.sh enforces: frontmatter present, private paths in placeholder form only, core wording project-generic, each rule ID declared by exactly one skill, both AGENTS files carrying the 4Q gates with both CLAUDE files as short shims, and a commit message free of private paths. Run `--selftest` after touching the scan — it plants a violation and asserts detection, so a broken pattern cannot pass silently.
 
 ## Verification
 
