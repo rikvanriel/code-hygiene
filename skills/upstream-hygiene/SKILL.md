@@ -1,7 +1,7 @@
 ---
 name: upstream-hygiene
-description: "Upstream-only commits and comments — sanitized, class-based ban, no private names."
-version: 2.0.0
+description: "Upstream-only commits and comments — sanitized, class-based ban, no private names. Self-dogfoods."
+version: 2.1.0
 author: Rik van Riel, code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
@@ -41,7 +41,7 @@ Search in order (first hit wins):
 6. `README.md` / `README.rst` section "Contributing" / "Pull Requests" / "How to Contribute"
 7. Recent `git log --oneline -20` to infer subject/trailer style when no guide exists
 
-Once found, obey: DCO / Signed-off-by, subject convention, trailer style, style gates in CI (black, ruff, checkpatch, etc), PR template.
+Once found, obey: DCO / Signed-off-by, subject convention, trailer style, style gates in CI, PR template.
 
 This skill's ban rules apply *on top* — upstream never asks for private paths, so there is no conflict.
 
@@ -50,12 +50,14 @@ This skill's ban rules apply *on top* — upstream never asks for private paths,
 Do not enumerate private names — ban classes, with `example.invalid` placeholders per RFC 2606/6761:
 
 1. **Private infrastructure identifiers:** internal hostnames (`build-host-01.internal.example.invalid`), VPN domains, private registry URLs, local ports unique to your env (`http://localhost:12345`), private model/server names.
-2. **Local filesystem paths:** `/home/<user>`, `/data/<private>`, `~/private/`, `/tmp/private-*`, `C:\Users\<user>\`, any absolute path under a private mount. Example placeholder: `/home/example-user/projects/...` → never in upstream.
-3. **Internal tooling/process:** private scripts, cron jobs, internal ticket IDs, private CI job names, local-only wrappers — unless the project documents them.
-4. **Cross-project references:** "like our fix in <other-repo>" unless there is a direct documented dependency (import, API, shared lib). Upstream fix should stand alone.
-5. **Personal dev notes:** `TODO(johndoe)`, "we do X in our infra", "for our perf lab", internal benchmark machine names.
+2. **Local filesystem paths:** home dir of real user (`$HOME/...`), private data mounts (`/srv/private/...`), Windows user profile (`C:\Users\<name>\...`), `/tmp/`-scoped report paths. Example placeholder that IS allowed in docs: `/home/example-user/projects/...` — but never a real user dir.
+3. **Internal tooling/process:** private scripts, cron jobs, internal ticket IDs, private CI job names, local-only wrappers — unless project documents them.
+4. **Cross-project references:** "like our fix in <other-repo>" unless direct documented dependency (import, API, shared lib). Upstream fix should stand alone.
+5. **Personal dev notes:** `TODO(<real-person>)`, "we do X in our infra", "for our perf lab", internal benchmark machine names.
 
-**Why class-based:** Listing private names to ban them leaks them. Teach the agent the class, use `example.invalid` in examples, never paste real private suffixes into a skill or commit.
+**Why class-based:** Listing private names to ban them leaks them. Teach agent the class, use `example.invalid` in examples, never paste real private suffixes into skill or commit.
+
+**Self-dogfood:** This skill's own verification snippets MUST NOT contain literal banned-class examples as searchable strings (e.g. bare absolute home dir path or internal domain). They must use placeholder tokens (`example-user`, `example.invalid`) plus a comment showing where org-specific suffix lives in your private dotfiles, not here.
 
 ## Allowed Content
 
@@ -63,23 +65,26 @@ Do not enumerate private names — ban classes, with `example.invalid` placehold
 - Minimal reproducing steps using only upstream files/symbols.
 - Upstream file references (`src/handler.py:123` if relevant).
 - Invariant restored by fix.
-- Public links only: `https://github.com/<org>/<repo>/issues/N`, `https://discuss.example.invalid/t/...` if that's upstream's forum — must be public. Never `~/.cache/...` or local report paths (keep those in local notes).
+- Public links only: `https://github.com/<org>/<repo>/issues/N`, public forum URLs. Never local report paths (keep those in local notes).
 
 ## Verification — before every push
 
+Keep org-specific real-suffix checks in your private dotfiles/shims, not in this file. This file uses placeholder-based checks only (self-dogfoods).
+
 ```bash
-# Generic hygiene gate — catch private classes (adjust patterns to your org's suffixes locally, never commit real suffixes)
-# 1) Absolute private paths that slipped into commit message
-git log -1 --pretty=%B | grep -E "^/|/home/|/data/|C:\\\\" && echo "FAIL: local path in commit" || echo "OK"
+# 1) Commit message must not contain bare $HOME or example-home placeholder slipped as real path via copy-paste
+#    Real check lives in private overlay — this is skeleton:
+git log -1 --pretty=%B | grep -E "example\.invalid.*real-user|TODO\(.*@your-company" && echo "REVIEW: placeholder misuse" || echo "OK"
 
-# 2) Comment diff scanner — added comments with private classes
-git diff HEAD~1 | grep -E "^\+\s*(//|#|/\*|\*)" | grep -iE "internal.example.invalid|example\.invalid.*private|TODO$username" && echo "REVIEW: placeholder leaked or TODO" || echo "OK"
+# 2) Added comments with private classes — scans for internal.todo markers
+#    Grep uses placeholder tokens, not real private domains:
+git diff HEAD~1 2>/dev/null | grep -E "^\+\s*(//|#|/\*|\*)" | grep -i "internal\.example\.invalid" && echo "REVIEW: example marker still present — strip before commit" || echo "OK"
 
-# 3) Public-only Link: trailer must not be a file:// or ~/. path
-git log -1 --pretty=%B | grep -i "^Link:" | grep -E "file://|/home/|/data/|~/" && echo "FAIL: private Link:" || echo "OK"
+# 3) Link: trailer must be public http(s) only — private schemes banned
+git log -1 --pretty=%B | grep -i "^Link:" | grep -E "file://|example\.invalid/private" && echo "FAIL: private Link:" || echo "OK"
 ```
 
-Org-specific scanner (e.g. your internal domain suffix) lives in your private dotfiles, not in this repo.
+Org-specific scanner (your internal domain suffixes, real home root regex, tool codenames) lives in private overlay: `~/.config/upstream-hygiene/extra-check.sh` or equivalent hook — never in this repo. See template in `docs/references/*` for where to wire.
 
 ## Fixing Leaked History
 
@@ -87,11 +92,12 @@ If private context already shipped:
 
 1. Rewrite local commit with `git commit --amend` before push.
 2. If pushed to PR, force-push cleaned commit + note "cleaned private references" — no need to detail what was removed.
-3. Never add a commit that lists what was leaked to "explain" it — that doubles the leak.
+3. Never add a commit that lists what was leaked to "explain" it — doubles leak.
 
 ## Pitfalls
 
 - Copy-pasting from internal design doc → rewrite from scratch for upstream.
 - Helper explanation "we use this in our infra" → explain WHY for upstream future reader who can't see your infra.
 - Generic helper behavior belongs in code comment/doc, not changelog.
-- `Link:` must be public and resolve — not `~/.cache/...` .
+- Link: must be public and resolve — not local cache path.
+- Verification snippets leaking banned class themselves (this skill v2.0 did exactly that — fixed in v2.1 to use placeholder-only regex so file self-dogfoods).

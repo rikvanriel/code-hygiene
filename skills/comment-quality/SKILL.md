@@ -1,7 +1,7 @@
 ---
 name: comment-quality
 description: "Code comment quality — WHY not WHAT, density caps, one source at definition, invariants MUST have WHY."
-version: 1.0.0
+version: 1.0.1
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
@@ -49,7 +49,7 @@ Per `upstream-hygiene`: no private infra, no internal mount paths, no "this is l
 
 ### GC-25 — Comment removal is cleanup, not fix — separate drive-by
 
-Removing a long-wrong comment mixed with logic change inflates diff. Do: separate commit/commit line "Remove stale comment — no behavior change" or fold only when that stale comment explains logic you are changing now.
+Removing a long-wrong comment mixed with logic change inflates diff. Do: separate commit "Remove stale comment — no behavior change" or fold only when that stale comment explains logic you are changing now.
 
 ## Anti-patterns
 
@@ -61,16 +61,23 @@ Removing a long-wrong comment mixed with logic change inflates diff. Do: separat
 | Comment says "see jira IN-123" | public link or gist: "See #123" |
 | Comment describes other project's fix | rewrite for this project's invariants |
 
+## Positive framing for comments too
+
+Applies from generic-principles "Positive framing". Comment that says "This is not kernel code" or "This is not X" is defining by negation — rewrite to what it IS and its contract. Provenance ("was previously ...") belongs in commit message or docs/references, not in code comment that ships.
+
 ## Verification
+
+Use placeholder tokens for verification examples (self-dogfoods upstream-hygiene).
 
 ```bash
 # Stale pattern: probe nearby file for contradictory TODO
 git diff --unified=0 | grep -A2 -B2 "TODO\|XXX\|HACK"
-# Private leakage in added comments
-git diff HEAD | grep -E "^\+\s*(//|#|/\*|\*)" | grep -iE "/home/|/data/|internal\.example" && echo FAIL || echo OK
+# Private leakage — real scanner lives in private overlay; skeleton here uses placeholder marker
+git diff HEAD 2>/dev/null | grep -E "^\+\s*(//|#|/\*|\*)" | grep -i "example\.invalid" && echo "REVIEW: placeholder marker still present — strip or rewrite" || echo OK
 ```
 
 ## Related
 
 - `code-structure` owns helper extraction — this skill owns what comment moves with it.
 - `upstream-hygiene` owns banned classes — this skill references it for examples.
+- `generic-principles` Positive framing — where tagline rule encoded.

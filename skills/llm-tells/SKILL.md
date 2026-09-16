@@ -1,62 +1,76 @@
 ---
 name: llm-tells
-description: "Strip LLM-generated tells from code, comments, changelogs — final pass before commit/PR."
-version: 1.0.0
+description: "Strip LLM-generated tells from code, comments, changelogs — final pass before commit/PR, includes positive framing."
+version: 1.1.0
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [review, style, ai, polish]
-    related_skills: [comment-quality, changelog-quality, self-review-gate]
+    tags: [review, llm, slop, readability]
+    related_skills: [self-review-gate, comment-quality, changelog-quality]
 ---
 
 # LLM Tells — Final Pass
 
-Run as last step before git commit / PR create. Marks text "delete or rewrite if present". Category: style tells in prose/code added or changed — pre-existing prose out of scope (drive-by cleanup elsewhere inflates small fix and collides). Fix that in its own patch.
+Final-pass checklist for generic repo (derived from kernel-readability but project-agnostic). Run after self-review-gate Gate1 before finishing.
 
-## Verification (facts first)
+Scope: text your patch adds/changes. Pre-existing prose out of scope — rewriting it inflates diff and collides with later patches touching same lines. Fix in own commit.
 
-- [ ] Every number/quote/date/perf result sourced this session (file, cmd output, benchmark log, public tracker) — not memory. See `factual-integrity` GC-01.
-- [ ] Performance before/after tables match actual benchmark output pasted verbatim; no rounded/invented deltas.
-- [ ] Links resolve to public URL — never local path.
-- [ ] Changelog scope matches diff stat — no claims about untouched files.
+## Verification — never invent
 
-## Changelog tells
+- [ ] Every number/quote/date/perf/hash/claim sourced this session (file, git log/show, cmd output, benchmark, crash dump, public tracker).
+- [ ] If don't know, TODO — not plausible fill.
+- [ ] Hashes exist in git log (`git show <hash>`) when trailer claims `Fixes: <hash>`.
+- [ ] Links public and resolve — no private scheme (`file://`, local report path).
+- [ ] Scope matches diff stat — no claims about untouched files.
 
-- [ ] Opens with "This patch..." or fix-first → rewrite to problem / current behavior present tense per `changelog-quality` GC-11.
-- [ ] Bugfix missing real-world symptom (who hits, observable behavior) → add it; for concurrency bug add ASCII timeline of actors.
-- [ ] Vague justification ("improves performance", "more efficient") → replace with number or concrete reasoning, or say TODO if not measured.
-- [ ] Marketing adjectives: robust, powerful, seamless, comprehensive, elegant, gracefully, leverages, utilizes → cut.
-- [ ] Hedging filler: "Note that", "Importantly", "It's worth noting", "Keep in mind", "Essentially", "Basically" → cut, state fact directly.
-- [ ] Double negative ("not X, not Y", "doesn't not") → rewrite as positive condition.
-- [ ] Recap / "In summary" paragraph at end → cut; end on effect or trailer.
-- [ ] Bulleted lists where prose fits → convert to paragraphs; keep bullets only for pasted data or genuinely parallel items.
-- [ ] Em-dash sprinkling — prefer periods / parentheses.
+## Changelog
 
-## Comments tells
+- [ ] Opens with "This patch …" or fix → rewrite to open with problem/current behavior in present tense.
+- [ ] Bugfix doesn't lead with real-world symptom (who hits, what breaks / how observed) → add it; race: CPU0/CPU1 ladder or sequence.
+- [ ] Vague justification ("improves performance", "more efficient") — replace with number + named workload + repro, or concrete reasoning. Don't invent numbers; if none say so.
+- [ ] Marketing adjectives: robust, powerful, seamless, comprehensive, elegant, gracefully — cut.
+- [ ] Hedging filler: "Note that", "Importantly", "It's worth noting" — cut, state fact directly.
+- [ ] Double negative ("not X, not Y") — rewrite as positive condition it describes.
+- [ ] Recap/"In summary" at end — cut; end on effect or trailer.
+- [ ] Bulleted lists where prose fits — convert to paras; keep bullets only for genuinely parallel items or pasted data.
+- [ ] No `Fixes:`/`Link:`/`Closes:` where warranted by project CONTRIBUTING — add if project uses.
+- [ ] Doesn't say what change does NOT do / limits — add if non-trivial (but phrased positively: "Scope: X, Y. Follow-up: Z" not "This is not ...").
 
-- [ ] Restates code ("/* increment counter */") → delete.
-- [ ] Kerneldoc scaffolding `/** @param` on private static helper → downgrade to `/* WHY */` or delete; reserve `/**` for public APIs.
-- [ ] Doc comment left describing wrong function after helper inserted (still compiles) → fix.
-- [ ] Multi-paragraph essay / numbered "plan" comment → compress to 2-8 line WHY.
-- [ ] Comment now contradicted by code change → rewrite in same diff.
-- [ ] Subtle locking/ordering/lifetime/invariant logic with NO why-comment → add one per `comment-quality` GC-22.
+## Positive framing — defines by negation (new)
 
-## Code tells
+- [ ] Tagline / first paragraph / skill description defines by what repo/thing *isn't* ("kernel-free", "not X", "no Y", "non-Z") → rewrite to what it IS and provides (capability, installable via, outcome). History / exclusion belongs in CONTRIBUTING provenance or docs/references/<example>.md as worked example, not in README tagline or normative skill description.
+- [ ] Doc contains "This is not ...", "This repo is ...-free" in first 3 paragraphs → fix.
+- [ ] On fix, link to generic-principles "Positive framing" where rule encoded.
 
-- [ ] Function over 40 lines → examine per `code-structure` GC-32; extract intent-named helpers.
-- [ ] Bare `{}` scoping blocks → declare at function top.
-- [ ] goto-ladder where early returns read better → flatten.
-- [ ] Drive-by changes mixed with logic → split into separate commit.
-- [ ] Pre-existing code made redundant by this change (no-op call, unreachable branch) → remove; don't comment explaining dead step as if required. Check failure paths, not just happy path: a call unreachable when every preceding step succeeds may be the only thing that runs when one bails early.
-- [ ] `static bool` helper misnamed as action → rename per GC-34 `should_`/`is_`/`has_` etc.
-- [ ] Templated Pros/Cons scaffolding, ornate verbs, over-bulleting in comments.
+Why: reader via search needs decide in 5 sec what they get. Defining by negation leaks internal history not actionable.
 
-## Scoped resolution (prevents "approve my own commit")
+## Comments
 
-If agent drove the tool that emitted a style notice you are addressing, the human reviewer is the other eye — do not also set yourself as approver. In single-agent mode that's self-review: say "I addressed X by Y, ready for human" rather than "LGTM".
+- [ ] Comment restates code ("/* increment counter */") — delete.
+- [ ] Doc scaffolding on private helper — downgrade to plain WHY or delete; reserve full doc for exported public APIs.
+- [ ] Doc comment left describing wrong function after helper inserted — still compiles.
+- [ ] Multi-para essay / numbered "plan" comment — compress to 2-8 line WHY.
+- [ ] Comment now contradicted by code change — rewrite in same diff.
+- [ ] Subtle logic (locking, ordering, lifetime, invariant) with NO WHY — add.
+- [ ] Comment defines by negation only ("Not kernel code") → rewrite to contract.
 
-## Automated helper (optional)
+## Code
 
-If installed, linter `scripts/check-hygiene.sh --staged` runs automated version with higher confidence bar — cluster requirement, compared against neighboring code, hard cap of 3 findings, phrased as questions rather than flat deletions. Use this checklist to fix yourself before posting, that linter as second noise-gated pass.
+- [ ] Function over ~40 logical lines — 40-line rule; extract intent-named helpers.
+- [ ] Bare `{ }` scoping blocks — declare at function top or helper.
+- [ ] goto-ladder where early returns read better — flatten.
+- [ ] Drive-by changes mixed with logic change — split separate commit.
+- [ ] Pre-existing code newly redundant (call turned no-op by new code, branch now unreachable) — remove, don't let comment explain dead step as if required. Check failure paths too: call unreachable on success may be only thing on early exit.
+- [ ] `bool` helper action-named (`drain`, `claim`, `flush` returning bool) — should use `should_/is_/needs_/can_/has_/try_` predicate naming.
+- [ ] Missing rollback/cleanup on irreversible step flagged by plan-iteration (c).
+
+## Verification cmd
+
+```bash
+# Generic slop markers (placeholder check — adjust)
+rg -n "robust|seamless|comprehensive|elegant" src/ 2>/dev/null | head
+# Positive framing quick scan (first 3 paragraphs of docs/)
+sed -n '1,10p' README.md | grep -i "not.*\|free\|non-" && echo "REVIEW: defines by negation?" || echo "OK"
+```
