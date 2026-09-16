@@ -1,0 +1,4 @@
+# Generated adopter templates — built from root AGENTS.md, never hand-edited.
+# Regenerate: ./scripts/build-template.py --profile full --write
+/templates/AGENTS.md
+/templates/CLAUDE.md

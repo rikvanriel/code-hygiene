@@ -75,7 +75,8 @@ docs/references/<name>.md       — TL;DR / Provides 2-3 rules / License / Use /
 scripts/phases.py               — prints cat commands + token budgets
 scripts/install.sh              — probes ~/.claude/skills, ~/.hermes/skills, AGENTS.md, .cursor/, .github/
 scripts/check-hygiene.sh        — dogfood self-check + --selftest
-templates/                      — AGENTS.md + CLAUDE.md distribution copies for other repos
+scripts/build-template.py       — generates templates/ from root AGENTS.md (--with memory,search; --check in CI)
+templates/                      — generated, git-ignored adopter copies; regenerate, do not hand-edit
 .github/workflows/check.yml     — CI running the self-check
 ```
 

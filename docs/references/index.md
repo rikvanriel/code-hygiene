@@ -21,7 +21,7 @@ Each reference entry `docs/references/<name>.md` has:
 - Core (`skills/`): generic principles that apply almost anywhere — upstream-hygiene, factual-integrity, changelog/comment/code quality, change splitting, debugging, self-review, plus sampling/pre-commit.
 - References (`docs/references/`): deeper tooling that is project-specific or complementary — you pull in their skill/repo on top of core.
 
-## Index (v0.2 — 10 entries)
+## Index (12 entries)
 
 | Entry | What it gives | License | Type |
 |-------|---------------|---------|------|
@@ -34,6 +34,8 @@ Each reference entry `docs/references/<name>.md` has:
 | [lint-chain](./lint-chain.md) | gitleaks/trufflehog secret scan + typos + editorconfig + pre-commit orchestration | MIT | pre-commit chain |
 | [stacked-pr](./stacked-pr.md) | ghstack / jj / git-branchless stacked PR tooling how it interacts with change-splitting GC-30..GC-35 | MIT | tooling |
 | [security-audit-lite](./security-audit-lite.md) | semgrep community + visible pattern lightweight pre-commit security | MIT | security |
+| [lemmalog](./lemmalog.md) | Local-first working memory: line-protocol facts, budget-aware retrieval | see upstream | memory (MCP) |
+| [code-search](./code-search.md) | zoekt content/symbol lookup + semcode semantic cross-refs, both local | MIT/Apache-2.0 + see upstream | search (MCP) |
 | template | How to add new reference | — | template |
 
 Planned next (not yet stubbed):

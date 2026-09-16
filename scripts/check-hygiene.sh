@@ -84,12 +84,18 @@ check_id_declarations() {       # $1 = root
 
 check_contributor_notes() {     # $1 = root
   local rc=0 f n
-  for f in "$1/AGENTS.md" "$1/templates/AGENTS.md"; do
+  for f in "$1/AGENTS.md"; do
     [ -f "$f" ] || { echo "FAIL: $f missing"; rc=1; continue; }
     grep -q "materially better way" "$f" || { echo "FAIL: $f missing gate (b)"; rc=1; }
     grep -q "important missing"     "$f" || { echo "FAIL: $f missing gate (c)"; rc=1; }
   done
-  for f in "$1/CLAUDE.md" "$1/templates/CLAUDE.md"; do
+  if [ -x "$1/scripts/build-template.py" ]; then
+    ( cd "$1" && ./scripts/build-template.py --profile full 2>/dev/null | grep -q "important missing" ) \
+      || { echo "FAIL: build-template.py output lost a gate - fix the generator"; rc=1; }
+    ( cd "$1" && ./scripts/build-template.py --profile full 2>/dev/null | grep -q "materially better way" ) \
+      || { echo "FAIL: build-template.py output lost a gate - fix the generator"; rc=1; }
+  fi
+  for f in "$1/CLAUDE.md"; do
     [ -f "$f" ] || { echo "FAIL: $f missing"; rc=1; continue; }
     grep -q "AGENTS.md" "$f" || { echo "FAIL: $f does not point to AGENTS.md"; rc=1; }
     n="$(wc -l < "$f")"
@@ -101,7 +107,7 @@ check_contributor_notes() {     # $1 = root
 check_no_budget_claims() {      # $1 = root
   local hits
   hits="$(cd "$1" && grep -nE '([0-9]+[[:space:]]*w[[:space:]]*~[[:space:]]*[0-9]+|[0-9]+(\.[0-9]+)?k[[:space:]]*tok|[0-9]+[[:space:]]*words?[[:space:]]*~)' \
-    README.md AGENTS.md CONTRIBUTING.md templates/AGENTS.md 2>/dev/null | grep -vE 'phases\.py' || true)"
+    README.md AGENTS.md CONTRIBUTING.md 2>/dev/null | grep -vE 'phases\.py' || true)"
   [ -n "$hits" ] || return 0
   echo "$hits"
   echo "FAIL: entry doc states a load budget — read it from phases.py instead"
@@ -203,8 +209,8 @@ check_generic_wording "$REPO" && echo "PASS: core wording stays project-generic"
 echo "### Rule ID declarations unique per skill (cross-references allowed)"
 check_id_declarations "$REPO" && echo "PASS: every rule ID declared once (cross-references excluded)" || fail=1
 
-echo "### Contributor-note consistency (AGENTS canonical, CLAUDE shim, templates)"
-check_contributor_notes "$REPO" && echo "PASS: both AGENTS carry the 4Q gates; both CLAUDE point back and stay short" || fail=1
+echo "### Contributor-note consistency (AGENTS canonical, CLAUDE shim, generator fresh)"
+check_contributor_notes "$REPO" && echo "PASS: AGENTS carries the 4Q gates; CLAUDE points back and stays short; generator output carries the gates" || fail=1
 
 echo "### No hardcoded load budgets in entry docs (phases.py is the source)"
 check_no_budget_claims "$REPO" && echo "PASS: budgets come from phases.py, entry docs carry none" || fail=1
