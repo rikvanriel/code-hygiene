@@ -104,10 +104,11 @@ def main():
     ap.add_argument("--profile", choices=["minimal", "full"], default="full")
     ap.add_argument("--with", dest="with_refs", default="",
                     help="comma list: memory,search")
-    ap.add_argument("--check", action="store_true",
-                    help="fail if templates/ differs from generated output")
     ap.add_argument("--write", action="store_true",
-                    help="write generated output to templates/")
+                    help="write generated output to templates/ (local use only;"
+                    " templates/ is git-ignored, so there is no --check mode:"
+                    " freshness is verified by check-hygiene.sh, which greps"
+                    " the generator's stdout for the 4Q gates)")
     args = ap.parse_args()
     with_refs = [w for w in args.with_refs.split(",") if w in REFERENCED_SECTIONS]
     if args.with_refs and not with_refs:
@@ -125,21 +126,8 @@ def main():
         + "```\n"
     )
 
-    if args.check:
-        problems = []
-        if TPL_AGENTS.read_text() != agents:
-            problems.append("templates/AGENTS.md differs from generated output")
-        if TPL_CLAUDE.read_text() != claude:
-            problems.append("templates/CLAUDE.md differs from generated output")
-        if problems:
-            for p in problems:
-                print("FAIL: " + p)
-            print("Regenerate: ./scripts/build-template.py --profile %s --write" % args.profile)
-            return 1
-        print("PASS: templates/ match generated output")
-        return 0
-
     if args.write:
+        TPL_AGENTS.parent.mkdir(parents=True, exist_ok=True)
         TPL_AGENTS.write_text(agents)
         TPL_CLAUDE.write_text(claude)
         print("wrote templates/AGENTS.md + templates/CLAUDE.md")

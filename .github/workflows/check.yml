@@ -16,9 +16,8 @@ jobs:
           ./scripts/check-hygiene.sh --selftest
       - name: Check hygiene
         run: ./scripts/check-hygiene.sh HEAD
-      - name: Verify generated templates are fresh
-        run: ./scripts/build-template.py --profile full --check
       - name: Show what an adopter sees
         run: |
+          ./scripts/build-template.py --profile full | head -n 30
           ./scripts/install.sh --list
           ./scripts/phases.py --phase 0
