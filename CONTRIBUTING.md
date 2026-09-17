@@ -13,6 +13,7 @@ MIT — matches the origin of some integrated content.
 - code-structure owns GC-40..GC-47 (length signal, predicate naming, ownership clarity).
 - upstream-hygiene owns the class-based leak ban and Step 0 discovery.
 - self-review-gate owns Gate 1/Gate 2 and the human-escalation triggers.
+- skill-authoring owns GC-50..GC-53 (trigger-first descriptions, tag vocabulary, new-skill checklist).
 
 Others cross-reference, never restate normative text. A rule ID is *declared* by exactly one skill; cross-references elsewhere are expected and allowed.
 
