@@ -1,13 +1,13 @@
 ---
 name: changelog-quality
-description: "Use when drafting a commit message, changelog entry, or PR description. States problem, cause, fix invariant."
+description: "Use when drafting or reviewing a commit message, changelog entry, cover letter, or PR description. States problem, cause, fix invariant."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [changelog, commit, pr, review]
+    tags: [changelog, commit, pr, cover-letter, review]
     related_skills: [factual-integrity, upstream-hygiene, comment-quality]
 ---
 

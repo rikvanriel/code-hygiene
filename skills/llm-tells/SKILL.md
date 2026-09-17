@@ -1,6 +1,6 @@
 ---
 name: llm-tells
-description: "Use as final pass before commit or PR. Strips AI tells from code, comments, changelogs."
+description: "Use as a final pass before commit or PR, or when text sounds AI-generated. Strips AI tells from code, comments, changelogs."
 version: 1.1.0
 author: code-hygiene contributors
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: factual-integrity
-description: "Use when a claim needs sourcing — numbers, hashes, quotes, perf results. Sources or TODOs it."
+description: "Use when writing or verifying claims — numbers, hashes, quotes, perf results. Sources or TODOs it."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

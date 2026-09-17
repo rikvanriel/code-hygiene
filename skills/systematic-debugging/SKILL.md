@@ -1,13 +1,13 @@
 ---
 name: systematic-debugging
-description: "Use when debugging a failure. 4-phase root cause before attempting a fix."
+description: "Use when debugging a failure — failing test, crash, broken behavior, or flake. Finds root cause before fixing."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [debugging, root-cause, reproduction, ownership, verification]
+    tags: [debugging, root-cause, crash, flaky, reproduction, verification]
     related_skills: [factual-integrity, code-structure, change-splitting, self-review-gate]
 ---
 

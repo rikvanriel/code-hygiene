@@ -1,13 +1,13 @@
 ---
 name: pre-commit-check
-description: "Use before every push. Wraps verification gates — hygiene, changelog, never-invent."
+description: "Use before commit or push, or when asking if work is ready. Runs hygiene, changelog, and never-invent gates."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [pre-commit, verification, hygiene, check]
+    tags: [pre-commit, push, verification, hygiene]
     related_skills: [upstream-hygiene, changelog-quality, factual-integrity, project-discovery, llm-tells]
 ---
 

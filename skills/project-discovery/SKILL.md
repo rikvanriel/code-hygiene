@@ -1,6 +1,6 @@
 ---
 name: project-discovery
-description: "Use before editing anything in a repo. Finds and follows upstream's own contribution rules."
+description: "Use before editing anything in a repo or asking how a project wants contributions. Finds upstream's own rules."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

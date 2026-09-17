@@ -1,6 +1,6 @@
 ---
 name: change-splitting
-description: "Use when a change is large or mixes subjects. Splits work into reviewable one-idea units."
+description: "Use when a change is large, mixes subjects, needs bisectable units, or a reviewer asked to split. Splits work into reviewable one-idea units."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

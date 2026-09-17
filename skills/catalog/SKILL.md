@@ -1,6 +1,6 @@
 ---
 name: catalog
-description: "Use when starting work in an unfamiliar repo or unsure which hygiene skills apply. Recommends a subset."
+description: "Use when starting work in an unfamiliar repo, setting up hygiene skills, or unsure which skills a task needs. Recommends and installs a subset."
 version: 1.1.0
 author: code-hygiene contributors
 license: MIT

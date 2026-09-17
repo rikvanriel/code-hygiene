@@ -1,13 +1,13 @@
 ---
 name: socratic-spec
-description: "Use when the goal is ambiguous or has 3+ steps. Assembles a spec, one question per turn."
+description: "Use when the goal is ambiguous, needs clarifying, or has 3+ steps. Builds a spec one question per turn."
 version: 1.1.0
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [spec, planning, socratic, discovery]
+    tags: [spec, planning, requirements, clarification]
     related_skills: [project-discovery, self-review-gate, plan-iteration-gate]
 ---
 

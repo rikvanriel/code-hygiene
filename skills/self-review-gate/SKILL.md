@@ -1,13 +1,13 @@
 ---
 name: self-review-gate
-description: "Use before final output on non-trivial work. Razor self-review plus plan iteration gates."
+description: "Use before final output on non-trivial work, or before irreversible or externally visible steps. Checks errors, better ways, missing pieces."
 version: 1.2.0
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [review, planning, razor, socratic]
+    tags: [review, self-review, checklist, quality]
     related_skills: [factual-integrity, llm-tells, project-discovery, plan-iteration-gate]
 ---
 

@@ -1,13 +1,13 @@
 ---
 name: plan-iteration-gate
-description: "Use when iterating a plan toward convergence. 4Q loop with human escalation triggers."
+description: "Use when refining a draft plan, stuck iterating, or deciding whether to escalate to a human. Converges via 4Q loop."
 version: 1.2.0
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [planning, review, iteration]
+    tags: [planning, iteration, convergence, escalation]
     related_skills: [socratic-spec, project-discovery, self-review-gate]
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: language-style-sampling
-description: "Use when adopting an unfamiliar language or codebase style. Derives a guide by sampling."
+description: "Use when working in an unfamiliar language or matching an unfamiliar codebase style. Derives a style guide by sampling."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: comment-quality
-description: "Use when writing or reviewing code comments. WHY not WHAT, density caps, invariants get WHY."
+description: "Use when writing, reviewing, or cleaning up code comments. WHY not WHAT, invariants get WHY."
 version: 1.0.1
 author: code-hygiene contributors
 license: MIT

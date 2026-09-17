@@ -1,13 +1,13 @@
 ---
 name: upstream-hygiene
-description: "Use when commits or comments will go upstream. Keeps private context out of public history."
+description: "Use before commit, amend, push, or PR, or when cleaning a tainted message. Keeps private context out of public history."
 version: 2.1.0
 author: Rik van Riel, code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [commit, changelog, comments, upstream, hygiene, sanitization]
+    tags: [commit, push, pr, comments, upstream, leak, sanitization]
     related_skills: [changelog-quality, factual-integrity, comment-quality]
 ---
 
