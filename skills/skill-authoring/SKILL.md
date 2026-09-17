@@ -46,6 +46,15 @@ worker would use (`leak`, `crash`, `flaky`, `cover-letter`,
 `clarification`, `escalation`). Never repeat the skill's own name or
 category — a tag identical to the skill name matches nothing new.
 
+Split precision across the two fields: descriptions carry
+high-precision triggers (situations where the skill is almost certainly
+relevant — hidden seams, unreadable functions, stale comments), tags
+carry common-but-vague situations (large, mixed) that match often but
+discriminate little. Descriptions discriminate, tags recall — a vague
+situation in the 57-char window wastes it, while a precise one in tags
+is never reached because tag matching only helps when the description
+did not already match.
+
 ## GC-53 — New skill checklist
 
 - Frontmatter: name, trigger-first description, version, author,
