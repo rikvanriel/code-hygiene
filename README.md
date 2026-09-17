@@ -30,6 +30,28 @@ cat skills/catalog/SKILL.md
 ./scripts/check-hygiene.sh
 ```
 
+## Install
+
+Skills work from any clone — no build step. The installer probes
+`~/.claude/skills` and `~/.hermes/skills` and copies whole skill
+directories (`SKILL.md` plus `references/`), so installed skills resolve
+their own links with no checkout needed at load time.
+
+```bash
+./scripts/install.sh --list                  # what's available
+./scripts/install.sh --install all           # everything, with confirmation gate
+./scripts/install.sh --install catalog,upstream-hygiene   # a subset
+./scripts/install.sh --check                 # report missing/drifted installs
+./scripts/install.sh --check --diff          # also show what changed
+./scripts/install.sh --update                # apply clean updates; customized installs are refused, not overwritten
+```
+
+Keep the checkout around: `--check`/`--update` compare installed copies
+against the repo's own git history, and runnable scripts
+(`check-hygiene.sh`, `phases.py`) operate on a checkout. If an update is
+refused for local customizations, ask your LLM to import the upstream
+changes by hand.
+
 ## How to load (6 phases, cumulative — nothing unloads until task end)
 
 `scripts/phases.py --phase N [--profile minimal|full]` prints the exact `cat` commands and current token counts.
@@ -67,13 +89,14 @@ Converged = one full iteration with no new finding. Findings shrinking → keep 
 AGENTS.md                       — canonical contributor notes (agents discover this)
 CLAUDE.md                       — thin shim pointing at AGENTS.md
 skills/<name>/SKILL.md          — generic checkable rules, MIT, valid frontmatter
+skills/<name>/references/       — skill-local copies synced from docs/ by sync-skill-refs.py (generated, do not hand-edit)
 docs/generic-principles.md      — cliff-note summary
 docs/adr/                       — decisions (canonical AGENTS + shim CLAUDE; rule IDs)
 docs/references/index.md        — catalog of external references
 docs/references/template.md     — how to add a reference
 docs/references/<name>.md       — TL;DR / Provides 2-3 rules / License / Use / Install / When not / Link
 scripts/phases.py               — prints cat commands + token budgets
-scripts/install.sh              — probes ~/.claude/skills, ~/.hermes/skills, AGENTS.md, .cursor/, .github/
+scripts/install.sh              — probes ~/.claude/skills, ~/.hermes/skills, AGENTS.md, .cursor/, .github/; --check/--update vs git history
 scripts/check-hygiene.sh        — dogfood self-check + --selftest
 scripts/build-template.py       — generates templates/ from root AGENTS.md (--with memory,search; freshness enforced by check-hygiene.sh grepping generator stdout)
 templates/                      — generated, git-ignored adopter copies; regenerate, do not hand-edit
