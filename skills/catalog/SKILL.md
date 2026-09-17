@@ -19,8 +19,8 @@ Use when user says "set up hygiene", "make my AI write better PRs", "what skills
 
 1. Load inventory:
    - `skills/` dirs — read frontmatter description + first para — positive framing, what skill provides not what isn't.
-   - `docs/references/index.md` — cliff notes on external repos/tools (10 entries v0.2).
-   - `docs/generic-principles.md` summary.
+   - `references/index.md` — cliff notes on external repos/tools (10 entries v0.2).
+   - `references/generic-principles.md` summary.
    - `AGENTS.md` canonical + `CLAUDE.md` shim note per ADR 0001.
 
 2. Ask 2-3 discovery Qs (clarify choices array, never embed options inside question text):

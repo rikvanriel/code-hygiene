@@ -17,7 +17,7 @@ metadata:
 
 <!-- GC-10 --> Imperative, present tense, ≤50 chars. E.g. "Fix open redirect on login POST via crafted next_url". No "This patch..." or "Adds/fixes" — verb first.
 
-<!-- GC-10b --> If project uses conventional commits, defer to that spec (see `docs/references/conventional-commits.md` stub). GC-10 applies only when project has no subject spec.
+<!-- GC-10b --> If project uses conventional commits, defer to that spec (see `references/conventional-commits.md` stub). GC-10 applies only when project has no subject spec.
 
 Verification:
 ```bash
@@ -83,5 +83,5 @@ awk 'NR==1{print length": "$0} length>50 && NR==1{print "FAIL subject >50"}' /tm
 
 ## Related
 
-- `code-hygiene` distills further to `docs/generic-principles.md`.
+- `code-hygiene` distills further to `references/generic-principles.md`.
 - `upstream-hygiene` Step 0: discover upstream's own rules first, then apply GC-10..GC-17 on top.

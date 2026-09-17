@@ -68,44 +68,44 @@ agent_targets() {
   done
 }
 
-# installed_version <skill> <installed-file>
-# Prints the newest commit whose blob for skills/<skill>/SKILL.md matches
+# installed_version <skill> <installed-file> <repo-relpath>
+# Prints the newest commit whose blob for skills/<skill>/<relpath> matches
 # the installed file, or nothing when no historical blob matches.
 installed_version() {
-  local skill="$1" file="$2"
+  local skill="$1" file="$2" rel="$3"
   local want commit blob
   want="$(git -C "$REPO" hash-object "$file" 2>/dev/null)" || return 0
   while read -r commit; do
-    blob="$(git -C "$REPO" rev-parse "$commit:skills/$skill/SKILL.md" 2>/dev/null)" || continue
+    blob="$(git -C "$REPO" rev-parse "$commit:skills/$skill/$rel" 2>/dev/null)" || continue
     if [ "$blob" = "$want" ]; then
       printf '%s\n' "$commit"
       return 0
     fi
-  done < <(git -C "$REPO" log --format=%H -- "skills/$skill/SKILL.md")
+  done < <(git -C "$REPO" log --format=%H -- "skills/$skill/$rel")
 }
 
-# skill_status <skill> <installed-file>
+# file_status <skill> <installed-file> <repo-relpath>
 # Prints one of: current | missing | update-available:<C> | customized:<C> | foreign
 # Compares against the worktree file (not HEAD) so uncommitted repo edits
 # still detect as updates; history identifies the installed version.
-skill_status() {
-  local skill="$1" file="$2"
+file_status() {
+  local skill="$1" file="$2" rel="$3"
   if [ ! -f "$file" ]; then
     echo "missing"
     return
   fi
-  if cmp -s "$file" "$SKILLS_DIR/$skill/SKILL.md"; then
+  if cmp -s "$file" "$SKILLS_DIR/$skill/$rel"; then
     echo "current"
     return
   fi
   local ver worktree_changed
-  ver="$(installed_version "$skill" "$file")"
+  ver="$(installed_version "$skill" "$file" "$rel")"
   if [ -z "$ver" ]; then
     echo "foreign"
     return
   fi
   worktree_changed=0
-  git -C "$REPO" diff --quiet "$ver" -- "skills/$skill/SKILL.md" || worktree_changed=1
+  git -C "$REPO" diff --quiet "$ver" -- "skills/$skill/$rel" || worktree_changed=1
   if [ "$worktree_changed" = 0 ]; then
     echo "customized:$ver"
   else
@@ -113,15 +113,39 @@ skill_status() {
   fi
 }
 
+# skill_status <skill> <installed-dir>
+# Rolls file_status over SKILL.md plus references/*: worst state wins
+# (missing > foreign > customized > update-available > current).
+skill_status() {
+  local skill="$1" dir="$2"
+  local worst="current" worstver="" f rel st ver
+  for f in "$SKILLS_DIR/$skill"/SKILL.md "$SKILLS_DIR/$skill"/references/*.md; do
+    [ -f "$f" ] || continue
+    rel="${f#"$SKILLS_DIR/$skill/"}"
+    st="$(file_status "$skill" "$dir/$rel" "$rel")"
+    case "$st" in
+      missing) echo "missing"; return ;;
+      foreign) worst="foreign" ;;
+      customized:*)
+        ver="${st#customized:}"
+        if [ "$worst" != "foreign" ]; then worst="customized:$ver"; fi ;;
+      update-available:*)
+        ver="${st#update-available:}"
+        if [ "$worst" = "current" ]; then worst="update-available:$ver"; fi ;;
+    esac
+  done
+  echo "$worst"
+}
+
 check_installs() {          # $1 = show diffs (0/1); $2 = agent
   local showdiff="$1" agent="$2"
-  local rc=0 skill target file st ver
+  local rc=0 skill target dir st ver
   for d in "$SKILLS_DIR"/*/; do
     [ -f "$d/SKILL.md" ] || continue
     skill="$(basename "$d")"
     while read -r target; do
-      file="$target/$skill/SKILL.md"
-      st="$(skill_status "$skill" "$file")"
+      dir="$target/$skill"
+      st="$(skill_status "$skill" "$dir")"
       case "$st" in
         current) echo " - $skill @ $target: current" ;;
         missing) echo " - $skill @ $target: MISSING (not installed)"; rc=1 ;;
@@ -129,7 +153,7 @@ check_installs() {          # $1 = show diffs (0/1); $2 = agent
           ver="${st#update-available:}"
           echo " - $skill @ $target: update available (installed ${ver:0:12}, repo moved on)"
           if [ "$showdiff" = 1 ]; then
-            git -C "$REPO" diff "$ver" HEAD -- "skills/$skill/SKILL.md" | head -n 60
+            git -C "$REPO" diff "$ver" HEAD -- "skills/$skill" | head -n 60
           fi
           rc=1 ;;
         customized:*)
@@ -137,7 +161,7 @@ check_installs() {          # $1 = show diffs (0/1); $2 = agent
           echo " - $skill @ $target: CUSTOMIZED locally (matches ${ver:0:12}) — not touching; ask your LLM to import upstream changes by hand"
           if [ "$showdiff" = 1 ]; then
             echo "   --- your customizations (installed vs $ver) ---"
-            diff -u <(git -C "$REPO" show "$ver:skills/$skill/SKILL.md") "$file" | head -n 40 || true
+            diff -ru "$dir" "$SKILLS_DIR/$skill" --exclude=.git 2>/dev/null | head -n 40 || true
           fi
           rc=1 ;;
         foreign)
@@ -151,21 +175,21 @@ check_installs() {          # $1 = show diffs (0/1); $2 = agent
 
 update_installs() {         # $1 = agent
   local agent="$1"
-  local rc=0 skill target file st
+  local rc=0 skill target dir st
   for d in "$SKILLS_DIR"/*/; do
     [ -f "$d/SKILL.md" ] || continue
     skill="$(basename "$d")"
     while read -r target; do
-      file="$target/$skill/SKILL.md"
-      st="$(skill_status "$skill" "$file")"
+      dir="$target/$skill"
+      st="$(skill_status "$skill" "$dir")"
       case "$st" in
         current) echo " - $skill @ $target: current" ;;
         missing)
-          mkdir -p "$(dirname "$file")"
-          cp "$SKILLS_DIR/$skill/SKILL.md" "$file"
+          mkdir -p "$dir"
+          cp -r "$SKILLS_DIR/$skill/." "$dir/"
           echo " - $skill @ $target: installed (was missing)"; rc=1 ;;
         update-available:*)
-          cp "$SKILLS_DIR/$skill/SKILL.md" "$file"
+          cp -r "$SKILLS_DIR/$skill/." "$dir/"
           echo " - $skill @ $target: updated to HEAD"; rc=1 ;;
         customized:*|foreign)
           echo " - $skill @ $target: $st — skipped; ask your LLM to import upstream changes by hand"
@@ -205,16 +229,16 @@ install_skills() {
   fi
 
   echo "## Targets: ${targets[*]}"
-  echo "## Preview (first file that would be written):"
+  echo "## Preview (first files that would be written):"
   for s in "${SKILLS[@]}"; do
     src="$SKILLS_DIR/$s/SKILL.md"
     [ -f "$src" ] || { echo "  SKIP $s — not found at $src"; continue; }
-    echo "  src=$src"
+    echo "  src=$SKILLS_DIR/$s/ (SKILL.md plus references/ when present)"
     for t in "${targets[@]}"; do
       if [[ "$t" == *.md ]]; then
-        echo "    -> append to $t (generic AGENTS.md/copy-paste mode)"
+        echo "    -> append SKILL.md to $t (generic AGENTS.md/copy-paste mode)"
       else
-        echo "    -> $t/$s/SKILL.md"
+        echo "    -> $t/$s/"
       fi
     done
   done
@@ -235,10 +259,10 @@ install_skills() {
         cat "$src" >> "$t"
         echo -e "\n---\n" >> "$t"
       else
-        dst="$t/$s/SKILL.md"
-        mkdir -p "$(dirname "$dst")"
-        cp "$src" "$dst"
-        echo "Installed $dst"
+        dst="$t/$s"
+        mkdir -p "$dst"
+        cp -r "$SKILLS_DIR/$s/." "$dst/"
+        echo "Installed $dst/"
       fi
     done
   done

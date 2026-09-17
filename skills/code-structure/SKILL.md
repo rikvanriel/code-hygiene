@@ -55,7 +55,7 @@ Run: `git log --oneline -- <file> | head -n 20` + grep same file for sister patt
 - Security invariants in comment: see `comment-quality` GC-22.
 - Numbers/perf deltas: see `factual-integrity`.
 - Multi-file splitting and bisectable units: see `change-splitting` GC-30..GC-35.
-- Strict-project worked example: `docs/references/kernel-style-as-example.md`.
+- Strict-project worked example: `references/kernel-style-as-example.md`.
 
 ## Verification checklist
 

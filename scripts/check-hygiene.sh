@@ -170,6 +170,10 @@ selftest() {
   runs_fail "broken CLAUDE shim"
 
   fresh
+  printf '\nSTALE COPY\n' >> "$base/skills/catalog/references/index.md"
+  runs_fail "stale skill-local reference"
+
+  fresh
   printf 'See /home/example-user/x and /data/<private> and TODO later.\n' >> "$base/skills/llm-tells/SKILL.md"
   if (cd "$base" && bash scripts/check-hygiene.sh >/dev/null 2>&1); then
     echo "  ok   placeholders not flagged (no false positive)"
@@ -214,6 +218,9 @@ check_contributor_notes "$REPO" && echo "PASS: AGENTS carries the 4Q gates; CLAU
 
 echo "### No hardcoded load budgets in entry docs (phases.py is the source)"
 check_no_budget_claims "$REPO" && echo "PASS: budgets come from phases.py, entry docs carry none" || fail=1
+
+echo "### Skill-local references fresh (generated from docs/)"
+"$REPO/scripts/sync-skill-refs.py" --check && echo "PASS: skill references/ match docs/" || fail=1
 
 if [ -n "$TARGET" ]; then
   echo "### Commit message classes ($TARGET)"
