@@ -1,6 +1,6 @@
 ---
 name: project-discovery
-description: "Step 0 — find and follow upstream's own CONTRIBUTING/HACKING/AGENTS rules before drafting anything."
+description: "Use before editing anything in a repo. Finds and follows upstream's own contribution rules."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: factual-integrity
-description: "Never invent facts — every claim sourced this session, TODO if unknown, paste verbatim, re-assert on forward-port."
+description: "Use when a claim needs sourcing — numbers, hashes, quotes, perf results. Sources or TODOs it."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

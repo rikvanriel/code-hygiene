@@ -1,6 +1,6 @@
 ---
 name: change-splitting
-description: "Split work into reviewable units — one logical change per commit/PR, seam detection at 200-line trigger, thematic grouping, bisectable builds, incremental narrowing for caller infra."
+description: "Use when a change is large or mixes subjects. Splits work into reviewable one-idea units."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

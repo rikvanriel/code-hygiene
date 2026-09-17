@@ -1,6 +1,6 @@
 ---
 name: socratic-spec
-description: "Socratic interview to assemble project spec — goal, constraints, non-goals, actors, edges, verification — one Q per turn until 0 blocking Qs."
+description: "Use when the goal is ambiguous or has 3+ steps. Assembles a spec, one question per turn."
 version: 1.1.0
 author: code-hygiene contributors
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: llm-tells
-description: "Strip LLM-generated tells from code, comments, changelogs — final pass before commit/PR, includes positive framing."
+description: "Use as final pass before commit or PR. Strips AI tells from code, comments, changelogs."
 version: 1.1.0
 author: code-hygiene contributors
 license: MIT

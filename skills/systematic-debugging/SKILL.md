@@ -1,6 +1,6 @@
 ---
 name: systematic-debugging
-description: "Systematic debugging — 4-phase root cause: understand, reproducible case, minimal fix with ownership analysis, verify including non-interference and boundaries."
+description: "Use when debugging a failure. 4-phase root cause before attempting a fix."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

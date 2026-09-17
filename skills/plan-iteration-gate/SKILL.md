@@ -1,6 +1,6 @@
 ---
 name: plan-iteration-gate
-description: "Plan iteration until converged — (a) what's wrong (b) better way (c) missing (d) boundaries explicit, human escalation triggers."
+description: "Use when iterating a plan toward convergence. 4Q loop with human escalation triggers."
 version: 1.2.0
 author: code-hygiene contributors
 license: MIT

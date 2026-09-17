@@ -1,6 +1,6 @@
 ---
 name: upstream-hygiene
-description: "Upstream-only commits and comments — sanitized, class-based ban, no private names. Self-dogfoods."
+description: "Use when commits or comments will go upstream. Keeps private context out of public history."
 version: 2.1.0
 author: Rik van Riel, code-hygiene contributors
 license: MIT

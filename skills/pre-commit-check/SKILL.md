@@ -1,6 +1,6 @@
 ---
 name: pre-commit-check
-description: "Pre-commit verification gate — wrap check-hygiene, install list, changelog subject cap, factual integrity never-invent before every push."
+description: "Use before every push. Wraps verification gates — hygiene, changelog, never-invent."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

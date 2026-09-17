@@ -1,6 +1,6 @@
 ---
 name: code-structure
-description: "Code structure fundamentals — helper extraction by theme, function length signal, guard return, predicate naming, minimal obvious fix."
+description: "Use when writing or cleaning up code structure. Helper extraction, length signal, guard return."
 version: 1.0.1
 author: code-hygiene contributors
 license: MIT

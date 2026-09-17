@@ -1,6 +1,6 @@
 ---
 name: language-style-sampling
-description: "Derive project style guide by sampling authoritative sources — stdlib effective docs, language references, existing codebase — generic method."
+description: "Use when adopting an unfamiliar language or codebase style. Derives a guide by sampling."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

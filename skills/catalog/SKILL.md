@@ -1,6 +1,6 @@
 ---
 name: catalog
-description: "Picker skill — present available hygiene skills + reference cliff notes, asks 2-3 Qs, recommends subset, offers to install with confirmation gate."
+description: "Use when starting work in an unfamiliar repo or unsure which hygiene skills apply. Recommends a subset."
 version: 1.1.0
 author: code-hygiene contributors
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: changelog-quality
-description: "Commit/PR changelog quality — imperative subject ≤50, problem first, one idea per para, contrast, invariant not plumbing — concise changelog that states problem, cause, fix invariant, limits, each para one idea, public links only."
+description: "Use when drafting a commit message, changelog entry, or PR description. States problem, cause, fix invariant."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT

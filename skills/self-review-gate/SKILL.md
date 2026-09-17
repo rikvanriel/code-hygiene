@@ -1,6 +1,6 @@
 ---
 name: self-review-gate
-description: "Razor self-review + plan iteration 4Q gate + human escalation — two gates in one, checkable."
+description: "Use before final output on non-trivial work. Razor self-review plus plan iteration gates."
 version: 1.2.0
 author: code-hygiene contributors
 license: MIT
