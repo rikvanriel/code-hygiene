@@ -1,13 +1,13 @@
 ---
 name: comment-quality
-description: "Use when writing, reviewing, or cleaning up code comments. WHY not WHAT, invariants get WHY."
+description: "Use when comments restate code, lack WHY on subtle logic, or contradict the change. WHY not WHAT."
 version: 1.0.1
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [comments, readability, documentation]
+    tags: [comments, stale, why, documentation]
     related_skills: [code-structure, changelog-quality, upstream-hygiene]
 ---
 

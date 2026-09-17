@@ -1,13 +1,13 @@
 ---
 name: change-splitting
-description: "Use when a change is large, mixes subjects, needs bisectable units, or a reviewer asked to split. Splits work into reviewable one-idea units."
+description: "Use when a diff mixes subjects, hides a mechanical change, buries a helper, or breaks bisect. One idea per unit."
 version: 1.0.0
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [splitting, bisect, review, series]
+    tags: [splitting, bisect, large, mixed, seams, series]
     related_skills: [changelog-quality, code-structure, factual-integrity, project-discovery]
 ---
 

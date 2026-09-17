@@ -1,13 +1,13 @@
 ---
 name: code-structure
-description: "Use when writing new code, refactoring, or cleaning up long or deeply nested functions. Helper extraction, predicate naming, guard return."
+description: "Use when a function is too long, nests too deep, or mixes themes. Extracts helpers that earn their names."
 version: 1.0.1
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [structure, readability, refactoring, helpers, naming]
+    tags: [helpers, naming, readability, refactoring]
     related_skills: [comment-quality, factual-integrity, self-review-gate, change-splitting]
 ---
 
