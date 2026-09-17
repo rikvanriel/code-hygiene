@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [helpers, naming, readability, refactoring]
+    tags: [helpers, naming, long, nested, cleanup]
     related_skills: [comment-quality, factual-integrity, self-review-gate, change-splitting]
 ---
 

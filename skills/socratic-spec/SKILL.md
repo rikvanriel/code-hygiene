@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [spec, planning, requirements, clarification]
+    tags: [requirements, clarification, questions, planning]
     related_skills: [project-discovery, self-review-gate, plan-iteration-gate]
 ---
 

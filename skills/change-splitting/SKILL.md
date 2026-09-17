@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [splitting, bisect, large, mixed, seams, series]
+    tags: [split, bisect, large, mixed, seams, series]
     related_skills: [changelog-quality, code-structure, factual-integrity, project-discovery]
 ---
 

@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [debugging, root-cause, crash, flaky, reproduction, verification]
+    tags: [root-cause, crash, flaky, reproduction, failure]
     related_skills: [factual-integrity, code-structure, change-splitting, self-review-gate]
 ---
 

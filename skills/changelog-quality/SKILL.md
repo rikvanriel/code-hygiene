@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [changelog, commit, pr, cover-letter, review]
+    tags: [commit, pr, cover-letter, review, message]
     related_skills: [factual-integrity, upstream-hygiene, comment-quality]
 ---
 

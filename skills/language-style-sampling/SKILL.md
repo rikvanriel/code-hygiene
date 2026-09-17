@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [style, sampling, guide, authoring]
+    tags: [unfamiliar, new-language, conventions, formatting]
     related_skills: [project-discovery, code-structure, comment-quality, changelog-quality]
 ---
 

@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [skill, authoring, description, tags, discovery, frontmatter]
+    tags: [description, tags, frontmatter, new-skill]
     related_skills: [catalog, llm-tells, self-review-gate]
 ---
 

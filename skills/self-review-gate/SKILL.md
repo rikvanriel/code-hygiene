@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [review, self-review, checklist, quality]
+    tags: [review, checklist, mistakes, quality]
     related_skills: [factual-integrity, llm-tells, project-discovery, plan-iteration-gate]
 ---
 

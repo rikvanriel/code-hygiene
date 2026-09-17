@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [review, llm, slop, readability]
+    tags: [slop, ai-generated, polish, wordy]
     related_skills: [self-review-gate, comment-quality, changelog-quality]
 ---
 

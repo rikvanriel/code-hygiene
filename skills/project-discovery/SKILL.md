@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [discovery, upstream, contributing]
+    tags: [upstream, contributing, new-repo, guidelines]
     related_skills: [upstream-hygiene, self-review-gate]
 ---
 

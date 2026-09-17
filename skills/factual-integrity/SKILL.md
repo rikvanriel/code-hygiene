@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [integrity, verification, factual, claims]
+    tags: [claims, numbers, invented, unverified]
     related_skills: [upstream-hygiene, self-review-gate, changelog-quality]
 ---
 

@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [pre-commit, push, verification, hygiene]
+    tags: [push, ready, gates, verification]
     related_skills: [upstream-hygiene, changelog-quality, factual-integrity, project-discovery, llm-tells]
 ---
 

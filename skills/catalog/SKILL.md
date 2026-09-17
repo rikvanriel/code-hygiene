@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [catalog, discovery, install, onboarding]
+    tags: [discovery, install, onboarding, new-repo]
     related_skills: [project-discovery, upstream-hygiene, self-review-gate, change-splitting]
 ---
 

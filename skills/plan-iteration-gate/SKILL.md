@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [planning, iteration, convergence, escalation]
+    tags: [stuck, plan, convergence, escalation]
     related_skills: [socratic-spec, project-discovery, self-review-gate]
 ---
 

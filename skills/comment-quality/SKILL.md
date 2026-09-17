@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [comments, stale, why, documentation]
+    tags: [stale, why, useless, misleading]
     related_skills: [code-structure, changelog-quality, upstream-hygiene]
 ---
 
