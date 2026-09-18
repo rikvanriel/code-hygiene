@@ -10,7 +10,7 @@ MIT — matches the origin of some integrated content.
 - changelog-quality owns GC-10..GC-17 (subject/body rules).
 - comment-quality owns GC-20..GC-25 (WHY, density, source-at-definition).
 - change-splitting owns GC-30..GC-35 (logical change boundaries).
-- code-structure owns GC-40..GC-47 (length signal, predicate naming, ownership clarity).
+- code-structure owns GC-40..GC-48 (length signal, predicate naming, ownership clarity, one literal one home).
 - upstream-hygiene owns the class-based leak ban and Step 0 discovery.
 - self-review-gate owns Gate 1/Gate 2 and the human-escalation triggers.
 - skill-authoring owns GC-50..GC-53 (trigger-first descriptions, tag vocabulary, new-skill checklist).

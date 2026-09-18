@@ -50,6 +50,10 @@ metadata:
 
 Run: `git log --oneline -- <file> | head -n 20` + grep same file for sister pattern. Match whatever codebase already does over "textbook ideal".
 
+## GC-48 — One literal, one home
+
+When the same list, path set, or magic value appears in two or more places, hoist it to a single named definition and reference it. Duplicated literals diverge silently — copies added to one site but not the others, with no gate complaining. Applies to data (paths, IDs, thresholds), not just logic; if two copies cannot share a definition, that is a seam worth naming, not an excuse for two copies.
+
 ## Related — what belongs elsewhere
 
 - Security invariants in comment: see `comment-quality` GC-22.
