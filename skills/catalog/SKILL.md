@@ -28,7 +28,7 @@ Use when user says "set up hygiene", "make my AI write better PRs", "what skills
    - What type of project: library, CLI tool, web service, docs, kernel/module?
    - Where does code ship: personal repo only, OSS fork/PR, company monorepo, mail list patch series?
    - Subject spec: does project already have conventional commits / commitlint / own subject style per CONTRIBUTING? — decides between `conventional-commits` reference vs changelog-quality GC-10.
-   - Agent home where you want install: `~/.claude/skills`, `~/.hermes/skills`, `AGENTS.md` generic, `.cursor/rules`, `.github/copilot-instructions.md`?
+   - Agent home where you want install: `~/.claude/skills`, `~/.hermes/skills`, `~/.agents/skills` (Claw), `~/.openclaw/skills`, `~/.config/opencode/skills`, `AGENTS.md` generic, `.cursor/rules`, `.github/copilot-instructions.md`?
 
 3. Recommend 5-7 core + 2-3 references based on answers:
 

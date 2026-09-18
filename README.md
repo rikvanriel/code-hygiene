@@ -33,7 +33,8 @@ cat skills/catalog/SKILL.md
 ## Install
 
 Skills work from any clone — no build step. The installer probes
-`~/.claude/skills` and `~/.hermes/skills` and copies whole skill
+`~/.claude/skills`, `~/.hermes/skills`, `~/.agents/skills` (Claw),
+`~/.openclaw/skills`, and `~/.config/opencode/skills`, and copies whole skill
 directories (`SKILL.md` plus `references/`), so installed skills resolve
 their own links with no checkout needed at load time.
 
@@ -96,7 +97,7 @@ docs/references/index.md        — catalog of external references
 docs/references/template.md     — how to add a reference
 docs/references/<name>.md       — TL;DR / Provides 2-3 rules / License / Use / Install / When not / Link
 scripts/phases.py               — prints cat commands + token budgets
-scripts/install.sh              — probes ~/.claude/skills, ~/.hermes/skills, AGENTS.md, .cursor/, .github/; --check/--update vs git history
+scripts/install.sh              — probes claude/hermes/agents/openclaw/opencode skills, AGENTS.md, .cursor/, .github/; --check/--update vs git history
 scripts/check-hygiene.sh        — dogfood self-check + --selftest
 scripts/build-template.py       — generates templates/ from root AGENTS.md (--with memory,search; freshness enforced by check-hygiene.sh grepping generator stdout)
 templates/                      — generated, git-ignored adopter copies; regenerate, do not hand-edit

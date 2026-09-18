@@ -21,9 +21,21 @@ set -euo pipefail
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 SKILLS_DIR="$REPO/skills"
 
+# Every agent home probed by --install/--check/--update and shown by --list.
+# Single source: detect() and agent_targets() both expand this.
+AGENT_SKILL_HOMES=(
+  "$HOME/.claude/skills"
+  "$HOME/.hermes/skills"
+  "$HOME/.config/hermes/skills"
+  "$HOME/.agents/skills"
+  "$HOME/.openclaw/skills"
+  "$HOME/.config/opencode/skills"
+)
+
 detect() {
   echo "## Detected agent homes"
-  for p in "$HOME/.claude/skills" "$HOME/.hermes/skills" "$HOME/.config/hermes/skills"; do
+  local p
+  for p in "${AGENT_SKILL_HOMES[@]}"; do
     if [ -d "$(dirname "$p")" ]; then
       echo " - $(dirname "$p") -> $p $([ -d "$p" ] && echo exists || echo will-create)"
     else
@@ -61,7 +73,7 @@ agent_targets() {
     return
   fi
   local base
-  for base in "$HOME/.claude/skills" "$HOME/.hermes/skills"; do
+  for base in "${AGENT_SKILL_HOMES[@]}"; do
     if [ -d "$(dirname "$base")" ] || [ -d "$base" ]; then
       printf '%s\n' "$base"
     fi
@@ -212,14 +224,10 @@ install_skills() {
 
   IFS=',' read -ra SKILLS <<< "$list"
   echo "## Will install skills: ${SKILLS[*]}"
-  echo "## Agent target: $agent (auto = probe ~/.claude/skills + ~/.hermes/skills)"
+  echo "## Agent target: $agent (auto = probe claude + hermes + agents + openclaw + opencode homes)"
   local targets=()
   if [ "$agent" = "auto" ]; then
-    for base in "$HOME/.claude/skills" "$HOME/.hermes/skills"; do
-      if [ -d "$(dirname "$base")" ] || [ -d "$base" ]; then
-        targets+=("$base")
-      fi
-    done
+    while read -r base; do targets+=("$base"); done < <(agent_targets "auto")
     # generic fallback
     if [ ${#targets[@]} -eq 0 ]; then
       targets=("AGENTS.md")

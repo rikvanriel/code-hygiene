@@ -98,7 +98,7 @@ Encoded as check: self-review-gate Gate1 (d) and llm-tells final pass flag first
 
 - templates/AGENTS.md + templates/CLAUDE.md — distribution copies for OTHER repos to copy from.
 - Root AGENTS.md canonical here; root CLAUDE.md thin shim pointing here.
-- scripts/install.sh probes ~/.claude/skills, ~/.hermes/skills, AGENTS.md, .cursor/, .github/ with confirmation gate, no auto-install.
+- scripts/install.sh probes claude/hermes/agents/openclaw/opencode skill homes, AGENTS.md, .cursor/, .github/ with confirmation gate, no auto-install.
 - check-hygiene.sh enforces: frontmatter present, private paths in placeholder form only, core wording project-generic, each rule ID declared by exactly one skill, both AGENTS files carrying the 4Q gates with both CLAUDE files as short shims, and a commit message free of private paths. Run `--selftest` after touching the scan — it plants a violation and asserts detection, so a broken pattern cannot pass silently.
 
 ## Verification
