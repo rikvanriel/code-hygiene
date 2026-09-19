@@ -24,8 +24,8 @@ MIT for adapters; vendor docs CC-BY where relevant.
 ./scripts/install.sh --list            # detect homes
 ./scripts/install.sh --install catalog --to ~/.claude/skills  # one skill
 # or copy canonical
-cp AGENTS.md /path/to/project/AGENTS.md
-cp CLAUDE.md /path/to/project/CLAUDE.md  # shim
+cp AGENTS.md "$PROJECT_DIR/AGENTS.md"
+cp CLAUDE.md "$PROJECT_DIR/CLAUDE.md"  # shim
 ```
 
 ## When not to use

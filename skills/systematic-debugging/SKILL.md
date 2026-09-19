@@ -33,7 +33,7 @@ Don't reboot, don't retry loop suppression, don't blind retry. Demand cause. If 
 
 Verification:
 ```bash
-./repro.sh 2>&1 | tee /tmp/repro.log; grep -q "EXPECTED_FAILURE" /tmp/repro.log && echo REPRO_OK
+./repro.sh 2>&1 | tee "$TMPDIR/repro.log"; grep -q "EXPECTED_FAILURE" "$TMPDIR/repro.log" && echo REPRO_OK
 ```
 
 ## Phase 2 — Minimal fix + ownership analysis

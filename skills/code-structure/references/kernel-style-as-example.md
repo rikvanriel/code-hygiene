@@ -3,7 +3,7 @@
 
 ## TL;DR
 
-`/source/upstream/kernel-style` is a reference implementation of "how to make strict project readable" — 4-phase cumulative load, ID-anchored rationale (`<!-- GC-10 -->` → `grep ID rationale.md`), token budgets, lint scripts. Core principles are reusable here as example; their kernel-specifics stay out of core.
+[kernel-style](https://github.com/rikvanriel/kernel-style) is a reference implementation of "how to make a strict project readable" — 4-phase cumulative load, ID-anchored rationale (`<!-- GC-10 -->` → `grep ID rationale.md`), token budgets, and lint scripts. Core principles are reusable here as an example; kernel-specific rules stay out of core.
 
 ## Provides
 
@@ -37,5 +37,5 @@ myproject-style/
 
 ## Link
 
-- /source/upstream/kernel-style/README.md (local)
-- https://github.com/torvalds/linux/Documentation/process/ (upstream inspiration, many rules distilled from there)
+- https://github.com/rikvanriel/kernel-style (reference implementation)
+- https://github.com/torvalds/linux/tree/master/Documentation/process (upstream inspiration, many rules distilled from there)

@@ -68,9 +68,9 @@ No CL-12 50/70 exact — use 50 char subject aim, 72 body wrap convention when p
 ## Verification
 
 ```bash
-git log -1 --pretty=%B > /tmp/msg
-awk 'NR==1{print length": "$0} length>50 && NR==1{print "FAIL subject >50"}' /tmp/msg
-./scripts/check-hygiene.sh --msg /tmp/msg 2>&1 | head -n 20
+git log -1 --pretty=%B > "$TMPDIR/msg"
+awk 'NR==1{print length": "$0} length>50 && NR==1{print "FAIL subject >50"}' "$TMPDIR/msg"
+./scripts/check-hygiene.sh --msg "$TMPDIR/msg" 2>&1 | head -n 20
 ```
 
 ## Anti-patterns → rewrite

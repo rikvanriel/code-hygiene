@@ -16,7 +16,10 @@ REPO="$(cd "$(dirname "$0")/.." && pwd)"
 
 # Placeholder tokens that make a path a legitimate example rather than a leak.
 PLACEHOLDER_RE='example-user|example\.invalid|<[A-Za-z_-]+>|\$\{|\$[A-Za-z_]|TODO'
-PATH_RE='(/home|/Users|/data|C:\\Users)/[A-Za-z0-9_.-]+'
+# Absolute local paths require a boundary, while paths after a public URL host
+# must not be mistaken for local files.
+# Keep the Windows form separate because its drive prefix is not slash-bound.
+PATH_RE='(^|[^[:alnum:]_.:/~-])/([A-Za-z0-9_.-]+/)+[A-Za-z0-9_.-]+|(^|[^[:alnum:]_.:/~-])[A-Za-z0-9]:\\\\[^[:space:]`)>]+'
 
 check_frontmatter() {           # $1 = root
   local f bad=0
@@ -39,7 +42,12 @@ check_private_refs() {          # $1 = root
 }
 
 scan_private_refs() {           # $1 = dir or file list
-  grep -rnE "$PATH_RE" "$@" 2>/dev/null | grep -vE "$PLACEHOLDER_RE"
+  # Canonical system paths in shell examples (`/dev/null`, `/usr/bin`, ...)
+  # are not private checkout paths. Keep the filter here rather than baking
+  # machine-specific roots into PATH_RE.
+  grep -rnE "$PATH_RE" "$@" 2>/dev/null \
+    | grep -vE '/(bin|dev|etc|lib|proc|run|sbin|sys|usr|var)/' \
+    | grep -vE "$PLACEHOLDER_RE"
 }
 
 check_generic_wording() {       # $1 = root
@@ -154,8 +162,16 @@ selftest() {
   fi
 
   fresh
-  printf '\nSee /home/realleakuser/secret-tree for the report.\n' >> "$base/skills/llm-tells/SKILL.md"
+  printf '\nSee /private/realleakuser/secret-tree for the report.\n' >> "$base/skills/llm-tells/SKILL.md"
   runs_fail "private path"
+
+  fresh
+  printf '\nSee https://example.org/docs/reference for public documentation.\n' >> "$base/skills/llm-tells/SKILL.md"
+  if (cd "$base" && bash scripts/check-hygiene.sh >/dev/null 2>&1); then
+    echo "  ok   URL paths not flagged as local files"
+  else
+    echo "  FAIL URL path wrongly flagged"; rc=1
+  fi
 
   fresh
   printf '\n### GC-10 — planted duplicate\n\ntext\n' >> "$base/skills/comment-quality/SKILL.md"
