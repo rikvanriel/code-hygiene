@@ -10,12 +10,10 @@
 #   ./scripts/install.sh --check --diff     (also show unified diffs)
 #   ./scripts/install.sh --update           (apply clean updates; customized installs reported, not touched)
 #
-# Update model: installed copies are matched against the repo's own git
-# history, so no state file is needed. For each skill, the installed file
-# (A) is compared to repo HEAD (B); when they differ, history is walked to
-# find the commit (C) whose blob matches A — the version last installed.
-# A==B means current; A==C!=B means a clean update is available; A!=C means
-# locally customized (ask your LLM to import the upstream changes by hand).
+# Update model: SKILL.md copies are matched against the repo's own git
+# history, so no state file is needed. Reference files are materialized from
+# skills/references.manifest and compared directly with their canonical docs.
+# A customized SKILL.md is preserved; drifted references are regenerated.
 
 set -euo pipefail
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
@@ -80,6 +78,38 @@ agent_targets() {
   done
 }
 
+# materialize_skill <skill> <destination>
+# Copy the skill plus the canonical references listed in the repository manifest.
+materialize_skill() {
+  local skill="$1" dst="$2" ref_skill rel src
+  mkdir -p "$dst"
+  cp "$SKILLS_DIR/$skill/SKILL.md" "$dst/SKILL.md"
+  while IFS=$'\t' read -r ref_skill rel src; do
+    [[ -z "$ref_skill" || "$ref_skill" == \#* ]] && continue
+    [ "$ref_skill" = "$skill" ] || continue
+    [ -f "$REPO/$src" ] || { echo "Missing manifest source: $src" >&2; return 1; }
+    mkdir -p "$dst/$(dirname "$rel")"
+    cp "$REPO/$src" "$dst/$rel"
+  done < "$SKILLS_DIR/references.manifest"
+}
+
+# reference_status <skill> <installed-dir>
+# Prints current | missing | drifted for manifest-listed references.
+reference_status() {
+  local skill="$1" dir="$2" ref_skill rel src
+  while IFS=$'\t' read -r ref_skill rel src; do
+    [[ -z "$ref_skill" || "$ref_skill" == \#* ]] && continue
+    [ "$ref_skill" = "$skill" ] || continue
+    if [ ! -f "$dir/$rel" ]; then
+      echo "missing"; return
+    fi
+    if ! cmp -s "$REPO/$src" "$dir/$rel"; then
+      echo "drifted"; return
+    fi
+  done < "$SKILLS_DIR/references.manifest"
+  echo "current"
+}
+
 # installed_version <skill> <installed-file> <repo-relpath>
 # Prints the newest commit whose blob for skills/<skill>/<relpath> matches
 # the installed file, or nothing when no historical blob matches.
@@ -126,27 +156,15 @@ file_status() {
 }
 
 # skill_status <skill> <installed-dir>
-# Rolls file_status over SKILL.md plus references/*: worst state wins
-# (missing > foreign > customized > update-available > current).
+# Track SKILL.md through git history and manifest-listed references by content.
 skill_status() {
-  local skill="$1" dir="$2"
-  local worst="current" worstver="" f rel st ver
-  for f in "$SKILLS_DIR/$skill"/SKILL.md "$SKILLS_DIR/$skill"/references/*.md; do
-    [ -f "$f" ] || continue
-    rel="${f#"$SKILLS_DIR/$skill/"}"
-    st="$(file_status "$skill" "$dir/$rel" "$rel")"
-    case "$st" in
-      missing) echo "missing"; return ;;
-      foreign) worst="foreign" ;;
-      customized:*)
-        ver="${st#customized:}"
-        if [ "$worst" != "foreign" ]; then worst="customized:$ver"; fi ;;
-      update-available:*)
-        ver="${st#update-available:}"
-        if [ "$worst" = "current" ]; then worst="update-available:$ver"; fi ;;
-    esac
-  done
-  echo "$worst"
+  local skill="$1" dir="$2" st refs
+  st="$(file_status "$skill" "$dir/SKILL.md" "SKILL.md")"
+  case "$st" in
+    missing|foreign|customized:*|update-available:*) echo "$st"; return ;;
+  esac
+  refs="$(reference_status "$skill" "$dir")"
+  [ "$refs" = "current" ] && echo "current" || echo "$refs"
 }
 
 check_installs() {          # $1 = show diffs (0/1); $2 = agent
@@ -165,8 +183,11 @@ check_installs() {          # $1 = show diffs (0/1); $2 = agent
           ver="${st#update-available:}"
           echo " - $skill @ $target: update available (installed ${ver:0:12}, repo moved on)"
           if [ "$showdiff" = 1 ]; then
-            git -C "$REPO" diff "$ver" HEAD -- "skills/$skill" | head -n 60
+            git -C "$REPO" diff "$ver" HEAD -- "skills/$skill/SKILL.md" | head -n 60
           fi
+          rc=1 ;;
+        drifted)
+          echo " - $skill @ $target: reference files differ from canonical docs"
           rc=1 ;;
         customized:*)
           ver="${st#customized:}"
@@ -197,11 +218,10 @@ update_installs() {         # $1 = agent
       case "$st" in
         current) echo " - $skill @ $target: current" ;;
         missing)
-          mkdir -p "$dir"
-          cp -r "$SKILLS_DIR/$skill/." "$dir/"
+          materialize_skill "$skill" "$dir"
           echo " - $skill @ $target: installed (was missing)"; rc=1 ;;
-        update-available:*)
-          cp -r "$SKILLS_DIR/$skill/." "$dir/"
+        update-available:*|drifted)
+          materialize_skill "$skill" "$dir"
           echo " - $skill @ $target: updated to HEAD"; rc=1 ;;
         customized:*|foreign)
           echo " - $skill @ $target: $st — skipped; ask your LLM to import upstream changes by hand"
@@ -241,7 +261,7 @@ install_skills() {
   for s in "${SKILLS[@]}"; do
     src="$SKILLS_DIR/$s/SKILL.md"
     [ -f "$src" ] || { echo "  SKIP $s — not found at $src"; continue; }
-    echo "  src=$SKILLS_DIR/$s/ (SKILL.md plus references/ when present)"
+    echo "  src=$SKILLS_DIR/$s/SKILL.md (plus manifest-listed references/)"
     for t in "${targets[@]}"; do
       if [[ "$t" == *.md ]]; then
         echo "    -> append SKILL.md to $t (generic AGENTS.md/copy-paste mode)"
@@ -268,8 +288,7 @@ install_skills() {
         echo -e "\n---\n" >> "$t"
       else
         dst="$t/$s"
-        mkdir -p "$dst"
-        cp -r "$SKILLS_DIR/$s/." "$dst/"
+        materialize_skill "$s" "$dst"
         echo "Installed $dst/"
       fi
     done

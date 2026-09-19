@@ -90,8 +90,10 @@ Converged = one full iteration with no new finding. Findings shrinking → keep 
 AGENTS.md                       — canonical contributor notes (agents discover this)
 CLAUDE.md                       — thin shim pointing at AGENTS.md
 skills/<name>/SKILL.md          — generic checkable rules, MIT, valid frontmatter
-skills/<name>/references/       — skill-local copies synced from docs/ by sync-skill-refs.py (generated, do not hand-edit)
+skills/references.manifest       — canonical docs to materialize for each installed skill
 docs/generic-principles.md      — cliff-note summary
+
+docs/references/                — canonical project/tool reference notes; installed only when listed in the manifest
 docs/adr/                       — decisions (canonical AGENTS + shim CLAUDE; rule IDs)
 docs/references/index.md        — catalog of external references
 docs/references/template.md     — how to add a reference

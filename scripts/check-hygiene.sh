@@ -50,6 +50,18 @@ scan_private_refs() {           # $1 = dir or file list
     | grep -vE "$PLACEHOLDER_RE"
 }
 
+check_reference_manifest() {   # $1 = root
+  local root="$1" skill rel src bad=0
+  [ -f "$root/skills/references.manifest" ] || { echo "manifest missing"; return 1; }
+  while IFS=$'\t' read -r skill rel src; do
+    [[ -z "$skill" || "$skill" == \#* ]] && continue
+    [ -f "$root/skills/$skill/SKILL.md" ] || { echo "missing skill: $skill"; bad=1; }
+    [ -f "$root/$src" ] || { echo "missing reference source: $src"; bad=1; }
+    [[ "$rel" == references/* ]] || { echo "reference destination must be under references/: $rel"; bad=1; }
+  done < "$root/skills/references.manifest"
+  [ "$bad" -eq 0 ]
+}
+
 check_generic_wording() {       # $1 = root
   local hits
   hits="$1/skills $1/docs/generic-principles.md"
@@ -186,8 +198,8 @@ selftest() {
   runs_fail "broken CLAUDE shim"
 
   fresh
-  printf '\nSTALE COPY\n' >> "$base/skills/catalog/references/index.md"
-  runs_fail "stale skill-local reference"
+  printf 'missing-skill\treferences/missing.md\tdocs/references/missing.md\n' >> "$base/skills/references.manifest"
+  runs_fail "broken reference manifest"
 
   fresh
   printf 'See /home/example-user/x and /data/<private> and TODO later.\n' >> "$base/skills/llm-tells/SKILL.md"
@@ -235,8 +247,8 @@ check_contributor_notes "$REPO" && echo "PASS: AGENTS carries the 4Q gates; CLAU
 echo "### No hardcoded load budgets in entry docs (phases.py is the source)"
 check_no_budget_claims "$REPO" && echo "PASS: budgets come from phases.py, entry docs carry none" || fail=1
 
-echo "### Skill-local references fresh (generated from docs/)"
-"$REPO/scripts/sync-skill-refs.py" --check && echo "PASS: skill references/ match docs/" || fail=1
+echo "### Reference manifest"
+check_reference_manifest "$REPO" && echo "PASS: manifest sources and destinations are valid" || fail=1
 
 if [ -n "$TARGET" ]; then
   echo "### Commit message classes ($TARGET)"
