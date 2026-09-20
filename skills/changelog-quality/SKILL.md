@@ -65,6 +65,20 @@ Scope guard: "Does not change behavior for GET", "No fast-path impact".
 
 No CL-12 50/70 exact — use 50 char subject aim, 72 body wrap convention when project doesn't specify otherwise.
 
+### GC-18 — Verify substantive technical claims
+
+Before a substantive rewrite that changes or reorganizes technical meaning, inspect the code or patch the changelog describes. For each claim about behavior, affected paths, performance, compatibility, safety, or scope, identify the corresponding diff or code path. Remove or weaken claims that the code does not support; do not invent an effect merely because it sounds like the intended purpose.
+
+A readability-only edit may proceed without rereading the code when it preserves the original meaning and claim strength. If the code, diff, or test results are unavailable and the requested edit could affect technical meaning, make only a prose edit and say that the technical effect was not independently verified.
+
+Verification checklist:
+
+- [ ] Read the relevant diff and surrounding code before changing technical claims.
+- [ ] Trace the changed path far enough to verify the stated effect.
+- [ ] Check fallback, error, and unchanged paths where the changelog makes scope claims.
+- [ ] Match each important effect claim to code, tests, logs, or benchmark output.
+- [ ] Mark claims as unverified rather than making plausible replacements.
+
 ## Verification
 
 ```bash
