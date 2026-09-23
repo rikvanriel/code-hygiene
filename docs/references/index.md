@@ -21,12 +21,13 @@ Each reference entry `docs/references/<name>.md` has:
 - Core (`skills/`): generic principles that apply almost anywhere — upstream-hygiene, factual-integrity, changelog/comment/code quality, change splitting, debugging, self-review, plus sampling/pre-commit.
 - References (`docs/references/`): deeper tooling that is project-specific or complementary — you pull in their skill/repo on top of core.
 
-## Index (12 entries)
+## Index (13 entries)
 
 | Entry | What it gives | License | Type |
 |-------|---------------|---------|------|
 | [superpowers](./superpowers.md) | obra's plan/TDD/debugging skills — source of our plan iteration pattern | Apache-2.0 | skills repo |
 | [kernel-style-as-example](./kernel-style-as-example.md) | How kernel-style 4-phase cumulative with ID-anchored rationale works as example wrapper for strict project | MIT | example doc |
+| [changeset-idiom-example](./changeset-idiom-example.md) | Worked example: sample the project's own changesets to match its comment/message style, terminology, length | MIT | example doc |
 | [google-eng-practices](./google-eng-practices.md) | Small CLs, WHY comments, reviewer quality — reviewer-centric language | CC-BY | guide |
 | [conventional-commits](./conventional-commits.md) | conventionalcommits.org + keepachangelog + commitlint spec — subject/body specs | MIT / CC-BY | spec + linter |
 | [review-prompts](./review-prompts.md) | /kreview /kseries /kslop slash-command distribution pattern | MIT | pattern |

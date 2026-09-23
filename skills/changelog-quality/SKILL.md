@@ -98,4 +98,5 @@ awk 'NR==1{print length": "$0} length>50 && NR==1{print "FAIL subject >50"}' "$T
 ## Related
 
 - `code-hygiene` distills further to `references/generic-principles.md`.
+- `project-discovery` — sample recent changesets of the files you touch for the project's subject/body idiom before drafting the message.
 - `upstream-hygiene` Step 0: discover upstream's own rules first, then apply GC-10..GC-17 on top.

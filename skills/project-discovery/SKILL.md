@@ -24,7 +24,11 @@ Run before any code edit, changelog draft, or PR.
 5. `CLAUDE.md` / `AGENTS.md` / `.cursor/rules/` / `.github/copilot-instructions.md` (agent contributor notes if repo ships them)
 6. `README.md` / `README.rst` section "Contributing" / "Pull Requests" / "How to Contribute"
 7. `src/CONTRIBUTING` (e.g. Exim)
-8. Fallback: `git log --oneline -20` to infer subject/trailer style when no guide exists — mimic what upstream does.
+8. Fallback, and always worth the minute: sample the project's own changesets.
+   `git log --oneline -20 -- <paths you will modify>`, then `git show` a
+   handful of them, ideally by different authors. Written guides rarely cover
+   comment and message idiom, so read it off the history and mimic what
+   upstream does.
 
 ## Command
 
@@ -46,6 +50,26 @@ grep -i -n "contribut\|pull.request\|coding.style\|DCO\|sign.*off" README.md REA
 - PR template / issue template in `.github/`
 - External doc pointer (e.g. devguide.python.org) — follow external doc.
 - Agent-specific rules (`CLAUDE.md`) that override generic style at file level?
+
+## Match the project's idiom — comments and changelog
+
+Fit the change to the codebase you are touching: style, terminology, and length
+of both comments and the commit message.
+
+- Sample the changesets of the files you will modify, not the repo's whole
+  history — idiom differs by subsystem (driver vs core, tests vs docs,
+  hand-written vs generated).
+- Match three things: style (WHY block vs no comment, prose vs bullets, tense
+  and voice), terminology (use the project's own names for its concepts; a
+  synonym reads as a second concept), and length (the paragraph and subject
+  caps this project actually uses — they refine the generic defaults here, they
+  do not replace them).
+- Written rules win where they exist and are current; when practice diverges
+  from a written rule, follow the written rule and say so in the message.
+- Check: `git log -p -3 -- <path>` beside your own diff — do the comment shape
+  and message shape look like they came from the same project?
+
+Worked example: `docs/references/changeset-idiom-example.md`.
 
 ## Write down
 

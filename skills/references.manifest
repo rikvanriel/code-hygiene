@@ -4,3 +4,6 @@ catalog	references/index.md	docs/references/index.md
 changelog-quality	references/conventional-commits.md	docs/references/conventional-commits.md
 changelog-quality	references/generic-principles.md	docs/generic-principles.md
 code-structure	references/kernel-style-as-example.md	docs/references/kernel-style-as-example.md
+project-discovery	references/changeset-idiom-example.md	docs/references/changeset-idiom-example.md
+comment-quality	references/changeset-idiom-example.md	docs/references/changeset-idiom-example.md
+changelog-quality	references/changeset-idiom-example.md	docs/references/changeset-idiom-example.md

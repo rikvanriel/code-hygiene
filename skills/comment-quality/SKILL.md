@@ -81,3 +81,4 @@ git diff HEAD 2>/dev/null | grep -E "^\+\s*(//|#|/\*|\*)" | grep -i "example\.in
 - `code-structure` owns helper extraction — this skill owns what comment moves with it.
 - `upstream-hygiene` owns banned classes — this skill references it for examples.
 - `generic-principles` Positive framing — where tagline rule encoded.
+- `project-discovery` — sample the changesets of the files you touch for the project's comment style, terminology, and length.

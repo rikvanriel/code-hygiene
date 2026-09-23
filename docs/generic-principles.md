@@ -18,6 +18,7 @@
 
 - WHY not WHAT, 50-word paragraph cap, one source of truth at definition not header/prototype, cross-ref not duplicate.
 - Subtle logic (locking, ordering, lifetime, invariant) MUST have WHY. Obvious logic — no comment restating code.
+- Fit the project's own comment idiom — style, terminology, length — sampled from the changesets of the files you modify (rule in `project-discovery`).
 
 ## Code structure
 
