@@ -13,9 +13,15 @@ are the *fallback*, not the *target*.
 - Sampling recipe, concretely:
   ```bash
   git log --oneline -20 -- <paths you will modify>   # subject shape
-  git show <hash-of-2-3-touching-commits>            # comment + body shape
+  git show <hash> of 2-3 commits that touched the same files,
+      by different authors                           # comment + body shape
   git log -p -3 -- <path>                            # final against-your-own-diff check
   ```
+  Never sample only the current series' own patches: patch 10 of a series
+  whose history window is patches 2, 3, and 5 calibrates the draft against
+  the series' own prose — if that prose was LLM-written, the check validates
+  the draft against itself. Diverse authors measure the file's norm, not one
+  contributor's habits.
 - Three dimensions to match, with example signals:
   - Style — WHY block vs no comment; prose vs bulleted body; present vs past tense;
     imperative vs descriptive subjects.
