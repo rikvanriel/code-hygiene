@@ -5,7 +5,9 @@
 How to read a project's comment and commit-message conventions off its own
 changesets when no written guide covers them: pick the files you will modify,
 sample their recent history with `git log`/`git show`, and match style,
-terminology, and length. Generic core caps (subject ≤50, 50-word paragraphs)
+terminology, and length — style and terminology from a few samples (they are
+categorical), length measured from the file's distribution (it follows the
+size and kind of the change). Generic core caps (subject ≤50, 50-word paragraphs)
 are the *fallback*, not the *target*.
 
 ## Provides
@@ -15,6 +17,7 @@ are the *fallback*, not the *target*.
   git log --oneline -20 -- <paths you will modify>   # subject shape
   git show <hash> of 2-3 commits that touched the same files,
       by different authors                           # comment + body shape
+  git log --format=%B -20 -- <path>                  # length envelope, per commit
   git log -p -3 -- <path>                            # final against-your-own-diff check
   ```
   Never sample only the current series' own patches: patch 10 of a series
@@ -29,7 +32,12 @@ are the *fallback*, not the *target*.
     concept reads as a second concept (e.g. if the codebase says "route", do not
     introduce "endpoint" for the same thing).
   - Length — actual subject/paragraph lengths in `git log`, which can differ from
-    the generic 50-char/50-word caps in `changelog-quality` GC-10/GC-12.
+    the generic 50-char/50-word caps in `changelog-quality` GC-10/GC-12. Measured,
+    not eyeballed: 2-3 samples settle style and terminology (categorical), but
+    length is continuous and follows the size and kind of the change — read the
+    envelope across the file's recent commits, not a 3-point guess, and
+    calibrate with one sample of a change like yours. Samples that disagree
+    mark a file mid-transition: sample up.
 - Decision order: written rule (CONTRIBUTING/CLAUDE.md) > sampled practice >
   generic default. When written rule and practice disagree, follow the written
   rule and note the divergence in the message.

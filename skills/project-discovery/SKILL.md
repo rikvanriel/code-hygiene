@@ -64,6 +64,12 @@ of both comments and the commit message.
   synonym reads as a second concept), and length (the paragraph and subject
   caps this project actually uses — they refine the generic defaults here, they
   do not replace them).
+- Style and terminology come off 2-3 sampled changesets — they are categorical,
+  so a few samples settle them. Length does not: it is continuous and follows
+  the size and kind of the change, so read the file's actual envelope
+  (`git log --format=%B -20 -- <path>`) and include one sample of a change
+  like yours. Samples that disagree with each other mark a file
+  mid-transition — sample up.
 - Written rules win where they exist and are current; when practice diverges
   from a written rule, follow the written rule and say so in the message.
 - Check: `git log -p -3 -- <path>` beside your own diff — do the comment shape
