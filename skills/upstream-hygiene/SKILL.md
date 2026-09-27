@@ -86,6 +86,10 @@ git log -1 --pretty=%B | grep -i "^Link:" | grep -E "file://|example\.invalid/pr
 
 Org-specific scanner (your internal domain suffixes, real home root regex, tool codenames) lives in private overlay: `~/.config/upstream-hygiene/extra-check.sh` or equivalent hook — never in this repo. See template in `docs/references/*` for where to wire.
 
+## Submission gate — nothing leaves without a human
+
+A change is not submitted, posted, or published because it is finished: patches to an upstream list, a pull request on someone else's repository, a public issue, a comment on a tracker, a message to a maintainer — all of it waits for explicit human approval. Prepare it, report exactly what would be sent and where, and let the human send it. This holds even when the work is small and obviously correct, and even when the human asked for the change: asking for the work is not permission to publish it. When approval is given, the human is told what landed and where it can be read.
+
 ## Fixing Leaked History
 
 If private context already shipped:
