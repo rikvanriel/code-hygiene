@@ -68,6 +68,10 @@ Never introduce bug in one patch fixed later same series — squash, note after 
 
 State cross-patch ordering, prerequisites, dep notes in cover letter / PR description, not mechanics block middle of log going into history. Number patches N/M so order unambiguous.
 
+## GC-36 — A rename or bulk edit is complete only when nothing points at the old name
+
+A rename, a moved file, an extracted helper, a changed flag: the change is finished when every reference has been updated — code, tests, docs, config, examples, comments — and every touched file still parses. Grep the whole tree for the old name rather than fixing the call sites that compiled loudly: the ones that fail silently (a string in a config, a name in documentation, a dynamic lookup) are exactly the ones a compiler will not find. Report the grep you ran and its result as the completion evidence.
+
 ## 4Q gate
 
 (a) What's wrong? Does split mix subjects, break bisect, hide transformation, 200-line trigger unchecked without seam analysis?
