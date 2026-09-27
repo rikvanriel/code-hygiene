@@ -47,6 +47,14 @@ Before git commit, commit --amend, gh pr create, or any push of series that ship
    make check 2>&1 | tail -n 20 || true
    ```
 
+8. Guards are enforced, not documented: a docstring or comment saying "check X before calling" is not a guard — verify the callers actually check. A presence-only gate (both halves exist) does not prove they correspond (rule text and its rationale, field and its parser, flag and its handler). When you fix a bug, look for tests that assert the *old, buggy* behaviour and fix them in the same change; when a failing test disagrees with your fix, decide which reflects reality before touching either (`self-review-gate` review hygiene owns the never-weaken-validation rule).
+
+9. Checks run at the project's declared limit, not the tool's default: a lax default can pass input the project's own configuration would reject. And passing the automated validator is not the review standard — know what the gate does not check. CI must assert the *content* of generated artifacts, not merely that the generator exited 0.
+
+10. Claim-check the summary: does the report state what was *not* exercised — untested areas, areas narrowed for convenience, blockers — rather than only what passed? A verification report that lists only successes is not a verification report.
+
+11. Install/setup instructions verified on a clean machine or a fresh directory, not on the dev box: the author's machine has the dependency, the env var, and the cached artifact already.
+
 ## Human escalation format
 
 If gate FAILS and needs tradeoff:
