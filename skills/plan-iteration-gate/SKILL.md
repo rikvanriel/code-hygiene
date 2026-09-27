@@ -27,6 +27,10 @@ For each iteration ask in order (a)..(d). Patch plan, re-ask all. Loop till clea
 
 Failure modes: tight loops, unbounded state/handled queue growth, stale handles, injected input, blind suppression (try/except pass), missing fallback, per-item cost unbounded, ambiguous ownership, irreversible without guard, no verification signal, existing workload breakage not checked.
 
+Unstated premises are failure modes too: list what the plan assumes is true — a physical or geometric relation, an API's behaviour, a device's support, a file's format, a measurement's meaning — and verify each against source or a probe before building on it. One false premise invalidates every step that depends on it, so it is the cheapest thing on the list to check first, and it is the failure that survives the longest because everything above it looks internally consistent.
+
+Automation belongs here as well: a plan that enables anything state-mutating ships it in propose/dry-run mode first, so the first run observes the target rather than acting on it, and the human sees the diff before it is applied.
+
 ### (b) Is there a materially better way?
 
 Not just split — arch, tradeoff, reuse, ordering, cost.
