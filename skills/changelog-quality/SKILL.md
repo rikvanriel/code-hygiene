@@ -79,6 +79,10 @@ Verification checklist:
 - [ ] Match each important effect claim to code, tests, logs, or benchmark output.
 - [ ] Mark claims as unverified rather than making plausible replacements.
 
+### GC-19 — Credit copied or ported code in the commit that introduces the copy
+
+When a change brings in code that originated elsewhere — another project, another file in the same tree, a snippet from a specification or a public example — the credit belongs in the commit that introduces it, not in a later cleanup: `Co-authored-by:` / `Based-on:` / the upstream link in the message, and the source named in a comment where the adaptation is not obvious. A credit added in a follow-up commit arrives after the history that needed it, and a license-relevant origin is exactly the thing a reviewer cannot reconstruct from the diff. If the origin is not known, say that, rather than omitting it.
+
 ## Verification
 
 ```bash
