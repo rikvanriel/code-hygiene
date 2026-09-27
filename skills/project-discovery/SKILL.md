@@ -74,6 +74,11 @@ of both comments and the commit message.
   from a written rule, follow the written rule and say so in the message.
 - Check: `git log -p -3 -- <path>` beside your own diff — do the comment shape
   and message shape look like they came from the same project?
+- Rules move: never work from a remembered or cached copy of this project's
+  conventions — re-read the guide and re-sample the file history at the start of
+  each task. A convention recalled from an earlier session, or copied out of a
+  summary, may have been superseded since; the current source is the only
+  authority, and stale rules are followed confidently.
 
 Worked example: `docs/references/changeset-idiom-example.md`.
 
