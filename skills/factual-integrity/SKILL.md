@@ -43,6 +43,18 @@ When porting onto newer base, every number, error message, function size, and re
 
 Unverified "improves performance by 10%" without measurement is a bug. Gate with `scripts/check-hygiene.sh`.
 
+### GC-07 — A failure is not a value
+
+A fetch that failed, redirected, returned an error page, or parsed garbage is **unknown state**, never a number, a zero, or an empty result. Report it as needing checking (or skip it and report the count of skips); never let an error overwrite the last known-good value, and never let "empty" stand in for "no data" without ruling out a swallowed failure — a bare catch-all, a missing import, or a silent timeout all look exactly like an empty result. Print the failure and skip counts beside the number they would have contributed to.
+
+### GC-08 — Validate the content, not the status code
+
+A 200 is not a value, exit code 0 is not a result, and a retry stub is not data: any of them can carry an error page, a partial payload, or a fallback message. Check that what came back is the shape and type you asked for before it enters a calculation or a report.
+
+### GC-09 — Never assert absolute safety, and never label a thing with a property it lacks
+
+"This is safe" / "this cannot happen" / "there is no risk" are claims no evidence you can produce will support: state what you checked, under what conditions, and what remains unverified ("should be safe for the stated input; untested for concurrent use"). The same applies to labels — a stored vector is not "zero-cost", an unverified path is not "safe", a sampled value is not "exact". Name what the thing actually costs or guarantees; a label that overstates is a factual error that survives long after the caveat is lost.
+
 ## Workflow insert
 
 1. Run command / read file.
