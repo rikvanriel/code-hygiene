@@ -64,6 +64,26 @@ did not already match.
   hand-edited); runnable scripts stay checkout-resident.
 - related_skills lists the skills this one pairs with at load time.
 
+## GC-54 — A rule that is not reachable from the always-loaded context is not a rule
+
+A rule that only lives in a file nobody loads at the moment of action will be violated by every future reader, including you. Every mandatory rule needs a trigger line in the context that is loaded when the situation arises — the entry document, the phase file, the skill that fires on that task — and the trigger line says when it applies. Verifying this is mechanical: for each mandatory rule, name the file that gets loaded when its trigger fires, and check the rule is in it.
+
+## GC-55 — Write guidance so its entry point is self-sufficient
+
+A reader who lands on the entry file must be able to reach everything the guidance needs: relative links resolve, referenced files exist, and the order to read them is stated. An entry point that names a document which has moved, or that assumes a directory layout the reader does not have, sends the reader hunting instead of working.
+
+## GC-56 — Project-specific knowledge belongs in a scoped skill, not in always-loaded memory
+
+Facts that apply to one project (its layout, its quirks, its commands) load only for that project's work. Putting them in globally loaded memory spends every future task's attention on a topic that is not in front of it, and buries the cross-project facts that do apply. When a note is project-specific, put it in that project's skill; when it is a general lesson, put it in the general skill.
+
+## GC-57 — Capture a discovered repeatable method as a skill, including why it works
+
+When something you worked out is repeatable — a procedure, a diagnostic order, a pitfall with a fix — write it down as guidance in the same session, with the reason it works and the failure it prevents, not just the steps. The steps alone are re-derived at the same cost by the next reader; the reason is what lets them adapt it when the situation differs. Record the dead ends too: what was tried and ruled out saves the next attempt the same detour.
+
+## GC-58 — Adding a rule means deleting the wording it supersedes
+
+When a rule replaces an earlier one, the earlier text goes in the same change. Two versions left side by side — old sentence beside new, a note that contradicts the rule above it — make the reader obey whichever they read first, and the stale one looks equally current. Sediment accumulates quietly: each addition looks additive and the file drifts into saying several things at once. Making a change also means removing what it replaced.
+
 ## Verification
 
 ```bash
