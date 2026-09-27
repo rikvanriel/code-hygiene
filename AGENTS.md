@@ -24,8 +24,8 @@ Obey CONTRIBUTING.md single-source principle (factual-integrity owns R0, changel
    - (d) Are boundaries explicit? — CONTRIBUTING found, dep version pinned, irreversible guarded, tests as non-interference signal, scope limits positive not negative
    - Observable signal per step, trend vs count, rescope when stuck at same scale
    - Ask human only on 4 triggers: ambiguity unresolvable from spec+discovery, constraint tradeoff needs relaxation, irreversible/high-stakes with >1 path, no convergence after 2 iters same finding → need scope change
-4. **Phase 3 — code draft:** `code-structure` + `comment-quality` + `factual-integrity`
-5. **Phase 4 — self-review:** `self-review-gate` v1.2 — Gate1 before final output:
+4. **Phase 3 — code draft:** `code-structure` + `comment-quality` + `factual-integrity` + `repo-hygiene`
+5. **Phase 4 — self-review:** `self-review-gate` v1.2 + `evidence-discipline` + `artifact-handoff` — Gate1 before final output:
    - (a) What's wrong? failure modes, invented claims, concurrent derefs before free, all call sites
    - (b) Is there a materially better way? one concrete alternative with tradeoff or explicit no-better
    - (c) Is something important missing? same checklist as (c) above + ownership transfer, cleanup, boundary

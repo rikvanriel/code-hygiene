@@ -6,14 +6,17 @@ MIT — matches the origin of some integrated content.
 
 ## Single source principle
 
-- factual-integrity owns GC-01..GC-06 (never invent, TODO if unknown, verify vs diff).
-- changelog-quality owns GC-10..GC-17 (subject/body rules).
+- factual-integrity owns GC-01..GC-09 (never invent, TODO if unknown, verify vs diff, failure is not a value, content not status code, no absolute-safety claims).
+- changelog-quality owns GC-10..GC-19 (subject/body rules, credit for ported code).
 - comment-quality owns GC-20..GC-25 (WHY, density, source-at-definition).
-- change-splitting owns GC-30..GC-35 (logical change boundaries).
+- change-splitting owns GC-30..GC-36 (logical change boundaries, rename/bulk-edit completion).
 - code-structure owns GC-40..GC-48 (length signal, predicate naming, ownership clarity, one literal one home).
-- upstream-hygiene owns the class-based leak ban and Step 0 discovery.
-- self-review-gate owns Gate 1/Gate 2 and the human-escalation triggers.
-- skill-authoring owns GC-50..GC-53 (trigger-first descriptions, tag vocabulary, new-skill checklist).
+- skill-authoring owns GC-50..GC-58 (trigger-first descriptions, tag vocabulary, new-skill checklist, rule reachability, scoped knowledge, supersede-don't-accumulate).
+- evidence-discipline owns GC-60..GC-72 (instrument validation, discriminating metrics, sample and spread, configuration-identical comparison, controls, artifact verification, model-produced evidence).
+- artifact-handoff owns GC-80..GC-84 (self-identifying artifacts, retained inputs, cache provenance, read-back, local vs remote state).
+- repo-hygiene owns GC-90..GC-96 (paths, runtime config, generic-module constants, machine-derived data, throwaway scripts, one canonical copy, least privilege).
+- upstream-hygiene owns the class-based leak ban, Step 0 discovery, and the human submission gate.
+- self-review-gate owns Gate 1/Gate 2, review hygiene, and the human-escalation triggers.
 
 Others cross-reference, never restate normative text. A rule ID is *declared* by exactly one skill; cross-references elsewhere are expected and allowed.
 

@@ -21,8 +21,10 @@ HOT_PHASES = {
     1: ["skills/socratic-spec/SKILL.md"],
     2: ["skills/plan-iteration-gate/SKILL.md", "skills/self-review-gate/SKILL.md"],
     3: ["skills/code-structure/SKILL.md", "skills/comment-quality/SKILL.md",
-        "skills/factual-integrity/SKILL.md", "docs/generic-principles.md"],
-    4: ["skills/self-review-gate/SKILL.md", "skills/llm-tells/SKILL.md"],
+       "skills/factual-integrity/SKILL.md", "skills/repo-hygiene/SKILL.md",
+       "docs/generic-principles.md"],
+    4: ["skills/self-review-gate/SKILL.md", "skills/llm-tells/SKILL.md",
+       "skills/evidence-discipline/SKILL.md", "skills/artifact-handoff/SKILL.md"],
     5: ["skills/changelog-quality/SKILL.md", "skills/upstream-hygiene/SKILL.md",
         "skills/catalog/SKILL.md"],
 }

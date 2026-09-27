@@ -62,8 +62,8 @@ changes by hand.
 | 0 | discovery | `project-discovery` + `references/index.md` | before any edit |
 | 1 | spec interview | `socratic-spec` (divergent) | ≥3 steps / ambiguous goal |
 | 2 | plan iteration | `plan-iteration-gate` + `self-review-gate` Gate2 | after spec approved |
-| 3 | draft code | `code-structure` + `comment-quality` + `factual-integrity` + `generic-principles` | always hot from here |
-| 4 | review gate | `self-review-gate` Gate1 + `llm-tells` | mandatory before commit |
+| 3 | draft code | `code-structure` + `comment-quality` + `factual-integrity` + `repo-hygiene` + `generic-principles` | always hot from here |
+| 4 | review gate | `self-review-gate` Gate1 + `llm-tells` + `evidence-discipline` + `artifact-handoff` | mandatory before commit |
 | 5 | changelog/PR | `changelog-quality` + `upstream-hygiene` | mandatory when drafting message |
 
 See `docs/generic-principles.md` for the cliff-note summary.
@@ -106,26 +106,30 @@ templates/                      — generated, git-ignored adopter copies; regen
 .github/workflows/check.yml     — CI running the self-check
 ```
 
-## Core skills (15)
+## Core skills (19)
 
 Rules:
 
-- **factual-integrity** (GC-01..GC-06) — never invent, TODO if unknown, verify against the diff, paste verbatim, forward-port means re-assert.
-- **code-structure** (GC-40..GC-47) — helper extraction by theme, function length signal, guard early return, predicate naming, ownership clarity, minimal obvious fix.
+- **factual-integrity** (GC-01..GC-09) — never invent, TODO if unknown, verify against the diff, paste verbatim, forward-port means re-assert, a failure is not a value, validate content not status, no absolute-safety claims.
+- **evidence-discipline** (GC-60..GC-72) — validate the instrument, a metric that must be able to fail, sample and spread, stratify, identical-configuration comparison, no-change control, artifact verification, model-produced evidence is a draft.
+- **artifact-handoff** (GC-80..GC-84) — an artifact identifies itself, generated artifacts retain their inputs, cache provenance and invalidation, read back what you wrote, a local success is not a remote state.
+- **repo-hygiene** (GC-90..GC-96) — no machine-specific paths in code or tests, runtime values in config, generic modules carry no case constants, machine-derived data outside the tree, throwaway scripts out, one canonical copy, least privilege.
+- **code-structure** (GC-40..GC-48) — helper extraction by theme, function length signal, guard early return, predicate naming, ownership clarity, minimal obvious fix.
 - **comment-quality** (GC-20..GC-25) — WHY not WHAT, density caps, one source of truth at the definition, subtle logic must have WHY.
-- **changelog-quality** (GC-10..GC-17) — imperative subject ≤50, problem first, one idea per paragraph, contrast the already-correct path, invariant not plumbing.
-- **change-splitting** (GC-30..GC-35) — one logical change per commit, 200-line seam-examination trigger, thematic grouping, bisectable units, incremental narrowing.
+- **changelog-quality** (GC-10..GC-19) — imperative subject ≤50, problem first, one idea per paragraph, contrast the already-correct path, invariant not plumbing, credit ported code in the commit that introduces it.
+- **change-splitting** (GC-30..GC-36) — one logical change per commit, 200-line seam-examination trigger, thematic grouping, bisectable units, incremental narrowing, a rename is done only when nothing points at the old name.
 - **llm-tells** — final pass stripping AI tells from code, comments, and changelog, including framing by negation.
-- **upstream-hygiene** v2.1 — class-based private-context ban with placeholder examples, plus Step 0 discovery of upstream's own rules.
+- **upstream-hygiene** v2.1 — class-based private-context ban with placeholder examples, plus Step 0 discovery of upstream's own rules and the human submission gate.
 
 Process:
 
-- **project-discovery** — Step 0 ordered search for CONTRIBUTING / HACKING / AGENTS.
+- **project-discovery** — Step 0 ordered search for CONTRIBUTING / HACKING / AGENTS, plus loading the project's current rules rather than a remembered copy.
 - **socratic-spec** — interview to assemble a spec, one question per turn.
-- **plan-iteration-gate** — the 4-question loop until converged, with observable signals.
-- **self-review-gate** — Gate 1 self-review plus Gate 2 plan iteration plus human-escalation triggers.
+- **plan-iteration-gate** — the 4-question loop until converged, with observable signals, premise verification before building, and dry-run first for state-mutating automation.
+- **self-review-gate** — Gate 1 self-review plus Gate 2 plan iteration plus review hygiene plus human-escalation triggers.
 - **systematic-debugging** — understand, reproduce, minimal fix with ownership analysis, verify including non-interference; root cause before reboot.
-- **pre-commit-check** — wraps the runnable checks before a push, no auto-fix.
+- **pre-commit-check** — wraps the runnable checks before a push, no auto-fix; guards enforced not documented, declared limits not tool defaults, what was not exercised stated.
+- **skill-authoring** (GC-50..GC-58) — trigger-first descriptions, tag vocabulary, new-skill checklist, rule reachability from the loaded context, scoped knowledge, supersede rather than accumulate.
 - **language-style-sampling** — derive a style guide by sampling authoritative sources for the language in use.
 - **catalog** — picker: asks about project type and where the code goes, then recommends a subset and offers to install.
 
