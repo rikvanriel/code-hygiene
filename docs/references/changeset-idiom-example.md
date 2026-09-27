@@ -37,7 +37,9 @@ are the *fallback*, not the *target*.
     length is continuous and follows the size and kind of the change — read the
     envelope across the file's recent commits, not a 3-point guess, and
     calibrate with one sample of a change like yours. Samples that disagree
-    mark a file mid-transition: sample up.
+    mark a file mid-transition: sample up. If the content can be shortened
+    without leaving out important information, aim for a shorter than
+    average changelog or comment.
 - Decision order: written rule (CONTRIBUTING/CLAUDE.md) > sampled practice >
   generic default. When written rule and practice disagree, follow the written
   rule and note the divergence in the message.
