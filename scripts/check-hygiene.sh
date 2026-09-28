@@ -209,6 +209,12 @@ selftest() {
     echo "  FAIL placeholder text wrongly flagged"; rc=1
   fi
 
+  if python3 "$REPO/scripts/check-comment-drift.py" --selftest >/dev/null 2>&1; then
+    echo "  ok   comment-drift check fails on a planted violation"
+  else
+    echo "  FAIL comment-drift check cannot prove a planted violation"; rc=1
+  fi
+
   rm -rf "$tmp"
   return $rc
 }
