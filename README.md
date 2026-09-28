@@ -101,6 +101,7 @@ docs/references/<name>.md       — TL;DR / Provides 2-3 rules / License / Use /
 scripts/phases.py               — prints cat commands + token budgets
 scripts/install.sh              — probes claude/hermes/agents/openclaw/opencode skills, AGENTS.md, .cursor/, .github/; --check/--update vs git history
 scripts/check-hygiene.sh        — dogfood self-check + --selftest
+scripts/check-comment-drift.py  — reports comments/docstrings still asserting a removed identifier (--selftest proves it can fail)
 scripts/build-template.py       — generates templates/ from root AGENTS.md (--with memory,search; freshness enforced by check-hygiene.sh grepping generator stdout)
 templates/                      — generated, git-ignored adopter copies; regenerate, do not hand-edit
 .github/workflows/check.yml     — CI running the self-check
@@ -115,9 +116,9 @@ Rules:
 - **artifact-handoff** (GC-80..GC-84) — an artifact identifies itself, generated artifacts retain their inputs, cache provenance and invalidation, read back what you wrote, a local success is not a remote state.
 - **repo-hygiene** (GC-90..GC-96) — no machine-specific paths in code or tests, runtime values in config, generic modules carry no case constants, machine-derived data outside the tree, throwaway scripts out, one canonical copy, least privilege.
 - **code-structure** (GC-40..GC-48) — helper extraction by theme, function length signal, guard early return, predicate naming, ownership clarity, minimal obvious fix.
-- **comment-quality** (GC-20..GC-25) — WHY not WHAT, density caps, one source of truth at the definition, subtle logic must have WHY.
+- **comment-quality** (GC-20..GC-25) — WHY not WHAT, density caps, one source of truth at the definition, subtle logic must have WHY, retraction drift ranked by what the text claims.
 - **changelog-quality** (GC-10..GC-19) — imperative subject ≤50, problem first, one idea per paragraph, contrast the already-correct path, invariant not plumbing, credit ported code in the commit that introduces it.
-- **change-splitting** (GC-30..GC-36) — one logical change per commit, 200-line seam-examination trigger, thematic grouping, bisectable units, incremental narrowing, a rename is done only when nothing points at the old name.
+- **change-splitting** (GC-30..GC-36) — one logical change per commit, 200-line seam-examination trigger, thematic grouping, bisectable units, incremental narrowing, a rename or removal is done only when nothing points at the old name.
 - **llm-tells** — final pass stripping AI tells from code, comments, and changelog, including framing by negation.
 - **upstream-hygiene** v2.1 — class-based private-context ban with placeholder examples, plus Step 0 discovery of upstream's own rules and the human submission gate.
 
@@ -128,7 +129,7 @@ Process:
 - **plan-iteration-gate** — the 4-question loop until converged, with observable signals, premise verification before building, and dry-run first for state-mutating automation.
 - **self-review-gate** — Gate 1 self-review plus Gate 2 plan iteration plus review hygiene plus human-escalation triggers.
 - **systematic-debugging** — understand, reproduce, minimal fix with ownership analysis, verify including non-interference; root cause before reboot.
-- **pre-commit-check** — wraps the runnable checks before a push, no auto-fix; guards enforced not documented, declared limits not tool defaults, what was not exercised stated.
+- **pre-commit-check** — wraps the runnable checks before a push, no auto-fix; guards enforced not documented, declared limits not tool defaults, what was not exercised stated, removal/rename drift reported mechanically.
 - **skill-authoring** (GC-50..GC-58) — trigger-first descriptions, tag vocabulary, new-skill checklist, rule reachability from the loaded context, scoped knowledge, supersede rather than accumulate.
 - **language-style-sampling** — derive a style guide by sampling authoritative sources for the language in use.
 - **catalog** — picker: asks about project type and where the code goes, then recommends a subset and offers to install.

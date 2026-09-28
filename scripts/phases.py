@@ -24,7 +24,8 @@ HOT_PHASES = {
        "skills/factual-integrity/SKILL.md", "skills/repo-hygiene/SKILL.md",
        "docs/generic-principles.md"],
     4: ["skills/self-review-gate/SKILL.md", "skills/llm-tells/SKILL.md",
-       "skills/evidence-discipline/SKILL.md", "skills/artifact-handoff/SKILL.md"],
+       "skills/evidence-discipline/SKILL.md", "skills/artifact-handoff/SKILL.md",
+       "skills/pre-commit-check/SKILL.md"],
     5: ["skills/changelog-quality/SKILL.md", "skills/upstream-hygiene/SKILL.md",
         "skills/catalog/SKILL.md"],
 }

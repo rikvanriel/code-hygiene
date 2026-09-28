@@ -55,6 +55,11 @@ Before git commit, commit --amend, gh pr create, or any push of series that ship
 
 11. Install/setup instructions verified on a clean machine or a fresh directory, not on the dev box: the author's machine has the dependency, the env var, and the cached artifact already.
 
+12. Removal and rename drift: for every identifier whose behaviour this change removes or renames, grep the whole tree for the old name and leave nothing still asserting it — code, tests, docs, comments, docstrings. A docstring naming a key, parameter or field that no longer exists is a FALSE CONTRACT and fails this gate; the retraction itself belongs in the changelog, not in the comment.
+    ```bash
+    ./scripts/check-comment-drift.py "$PWD" HEAD
+    ```
+
 ## Human escalation format
 
 If gate FAILS and needs tradeoff:

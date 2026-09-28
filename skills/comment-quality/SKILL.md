@@ -1,13 +1,13 @@
 ---
 name: comment-quality
-description: "Use when comments restate code, lack WHY on subtle logic, or contradict the change. WHY not WHAT."
+description: "Use when comments or docstrings drift from the code: stale, retracted, or lacking WHY."
 version: 1.0.1
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [stale, why, useless, misleading]
+    tags: [stale, why, useless, misleading, retracted, docstring, removed]
     related_skills: [code-structure, changelog-quality, upstream-hygiene]
 ---
 
@@ -39,9 +39,25 @@ Genuinely subtle logic with no WHY comment is a bug. Check:
 
 If you can answer "why not simpler?" you need a comment.
 
-### GC-23 — Comment now contradicted by code change → rewrite in same diff
+### GC-23 — Comment contradicted by a code change → rewrite in the same diff
 
-Stale comment is worse than none. When changing code, grep nearby comments for contradiction and update them in same commit. Don't let comment explain dead step as if required.
+Stale comment is worse than none, and a stale DOCSTRING is worse than a stale
+comment: a comment narrates, a docstring makes a contract — one naming a
+parameter, return key or field the code no longer has reads as an invitation to
+call something that is not there. Rank the drift by what the text claims, not by
+how close it sits to the edit.
+
+- **Radius is the identifier, not the neighbourhood.** Removing a key, field,
+  flag, function or config name is a rename in reverse: grep the WHOLE tree for
+  that name — code, tests, docs, docstrings, comments — and settle every hit in
+  the same commit (`change-splitting` GC-36 owns the completion evidence). The
+  survivors are the ones no compiler reports: a docstring in the file you edited,
+  or a comment in ANOTHER module that justified its own field by the removed thing.
+- **Write what is true now, not what was true.** The replacement says why the code
+  does what it does today; the retraction is history and belongs in the changelog,
+  where a reader looking for it goes. GC-24 already bans provenance in shipped
+  comments — a retraction note is provenance. A comment whose only justification
+  was the removed thing is rewritten to that thing's own contract, or deleted.
 
 ### GC-24 — Public-only context
 

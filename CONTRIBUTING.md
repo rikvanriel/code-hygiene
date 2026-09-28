@@ -8,8 +8,8 @@ MIT — matches the origin of some integrated content.
 
 - factual-integrity owns GC-01..GC-09 (never invent, TODO if unknown, verify vs diff, failure is not a value, content not status code, no absolute-safety claims).
 - changelog-quality owns GC-10..GC-19 (subject/body rules, credit for ported code).
-- comment-quality owns GC-20..GC-25 (WHY, density, source-at-definition).
-- change-splitting owns GC-30..GC-36 (logical change boundaries, rename/bulk-edit completion).
+- comment-quality owns GC-20..GC-25 (WHY, density, source-at-definition, retraction drift).
+- change-splitting owns GC-30..GC-36 (logical change boundaries, rename/removal/bulk-edit completion).
 - code-structure owns GC-40..GC-48 (length signal, predicate naming, ownership clarity, one literal one home).
 - skill-authoring owns GC-50..GC-58 (trigger-first descriptions, tag vocabulary, new-skill checklist, rule reachability, scoped knowledge, supersede-don't-accumulate).
 - evidence-discipline owns GC-60..GC-72 (instrument validation, discriminating metrics, sample and spread, configuration-identical comparison, controls, artifact verification, model-produced evidence).

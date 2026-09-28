@@ -7,7 +7,7 @@ license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [split, bisect, large, mixed, seams, series]
+    tags: [split, bisect, large, mixed, seams, series, rename, removal, dangling]
     related_skills: [changelog-quality, code-structure, factual-integrity, project-discovery]
 ---
 
@@ -68,9 +68,11 @@ Never introduce bug in one patch fixed later same series — squash, note after 
 
 State cross-patch ordering, prerequisites, dep notes in cover letter / PR description, not mechanics block middle of log going into history. Number patches N/M so order unambiguous.
 
-## GC-36 — A rename or bulk edit is complete only when nothing points at the old name
+## GC-36 — A rename, a removal or a bulk edit is complete only when nothing points at the old name
 
-A rename, a moved file, an extracted helper, a changed flag: the change is finished when every reference has been updated — code, tests, docs, config, examples, comments — and every touched file still parses. Grep the whole tree for the old name rather than fixing the call sites that compiled loudly: the ones that fail silently (a string in a config, a name in documentation, a dynamic lookup) are exactly the ones a compiler will not find. Report the grep you ran and its result as the completion evidence.
+A rename, a moved file, an extracted helper, a changed flag, a removed key or field: the change is finished when every reference has been updated — code, tests, docs, config, examples, comments — and every touched file still parses. Grep the whole tree for the old name rather than fixing the call sites that compiled loudly: the ones that fail silently (a string in a config, a name in documentation, a dynamic lookup) are exactly the ones a compiler will not find. Report the grep you ran and its result as the completion evidence.
+
+A removal carries the reverse obligation: nothing may still ASSERT what was removed. A docstring promising a key the function no longer returns, or a comment justifying its own field by a diagnosis that was retracted elsewhere, is the same defect as a dangling call — the reader is sent after behaviour that does not exist. `comment-quality` GC-23 owns how the surviving text is worded; `scripts/check-comment-drift.py` reports the survivors mechanically.
 
 ## 4Q gate
 
