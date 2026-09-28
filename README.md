@@ -15,16 +15,16 @@ Generic, checkable rules live in `skills/`; specific projects and tools are cove
 ## Quick start
 
 ```bash
+# list + install (confirmation gate, no auto-install)
+./scripts/install.sh --list
+./scripts/install.sh --install all
+
 # see phases + current token budgets
 ./scripts/phases.py --phase 0
 ./scripts/phases.py --phase 5 --profile full
 
 # what's available + tailored recommendation
 cat skills/catalog/SKILL.md
-
-# list + install (confirmation gate, no auto-install)
-./scripts/install.sh --list
-./scripts/install.sh --install all
 
 # self-check — also run ./scripts/check-hygiene.sh --selftest to prove the scan can fail
 ./scripts/check-hygiene.sh
