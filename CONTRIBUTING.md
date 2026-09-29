@@ -11,7 +11,7 @@ MIT — matches the origin of some integrated content.
 - comment-quality owns GC-20..GC-25 (WHY, density, source-at-definition, retraction drift).
 - change-splitting owns GC-30..GC-36 (logical change boundaries, rename/removal/bulk-edit completion).
 - code-structure owns GC-40..GC-48 (length signal, predicate naming, ownership clarity, one literal one home).
-- skill-authoring owns GC-50..GC-58 (trigger-first descriptions, tag vocabulary, new-skill checklist, rule reachability, scoped knowledge, supersede-don't-accumulate).
+- skill-authoring owns GC-50..GC-59 (trigger-first descriptions, tag vocabulary, new-skill checklist, rule reachability, scoped knowledge, one home per guidance, load-frequency splits).
 - evidence-discipline owns GC-60..GC-72 (instrument validation, discriminating metrics, sample and spread, configuration-identical comparison, controls, artifact verification, model-produced evidence).
 - artifact-handoff owns GC-80..GC-84 (self-identifying artifacts, retained inputs, cache provenance, read-back, local vs remote state).
 - repo-hygiene owns GC-90..GC-96 (paths, runtime config, generic-module constants, machine-derived data, throwaway scripts, one canonical copy, least privilege).

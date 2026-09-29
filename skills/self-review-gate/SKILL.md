@@ -69,7 +69,7 @@ Rules:
 
 ### (e) Cut test
 
-For every sentence in output/commit/comment: would cutting it lose anything actionable? Cut filler, hedging, repetition. Output must stand alone — no internal codenames that need private context to decode. Re-read as stranger with zero context: "would an external maintainer with zero context understand what it provides?"
+For every sentence in output/commit/comment and in skill or doc text: would cutting it lose anything actionable? Cut filler, hedging, repetition. Output must stand alone — no internal codenames that need private context to decode. Re-read as stranger with zero context: "would an external maintainer with zero context understand what it provides?"
 
 **Limit.** Self-review raises floor, doesn't replace second set of eyes. If irreversible, externally visible, or others will act without re-checking — get actual second opinion (person, another model, independent re-derive) before shipping.
 

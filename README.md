@@ -130,7 +130,7 @@ Process:
 - **self-review-gate** — Gate 1 self-review plus Gate 2 plan iteration plus review hygiene plus human-escalation triggers.
 - **systematic-debugging** — understand, reproduce, minimal fix with ownership analysis, verify including non-interference; root cause before reboot.
 - **pre-commit-check** — wraps the runnable checks before a push, no auto-fix; guards enforced not documented, declared limits not tool defaults, what was not exercised stated, removal/rename drift reported mechanically.
-- **skill-authoring** (GC-50..GC-58) — trigger-first descriptions, tag vocabulary, new-skill checklist, rule reachability from the loaded context, scoped knowledge, supersede rather than accumulate.
+- **skill-authoring** (GC-50..GC-59) — trigger-first descriptions, tag vocabulary, new-skill checklist, rule reachability from the loaded context, scoped knowledge, one home per piece of guidance, split a body by load frequency.
 - **language-style-sampling** — derive a style guide by sampling authoritative sources for the language in use.
 - **catalog** — picker: asks about project type and where the code goes, then recommends a subset and offers to install.
 

@@ -1,13 +1,13 @@
 ---
 name: skill-authoring
-description: "Use when writing, editing, or reviewing a skill's description, tags, or structure. Matches triggers to loading context."
-version: 1.0.0
+description: "Use when writing, editing, or reviewing a skill's description, tags, structure, or size. Matches triggers to loading context."
+version: 1.1.0
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [description, tags, frontmatter, new-skill]
+    tags: [description, tags, frontmatter, new-skill, verbose, duplicate, split, references]
     related_skills: [catalog, llm-tells, self-review-gate]
 ---
 
@@ -17,6 +17,10 @@ A skill's description and tags are load-time matching material, not
 documentation. Write them from the perspective of an AI deciding what to
 load for the task in front of it — never from the perspective of the
 skill's author describing what's inside.
+
+Every sentence in a skill earns its place the way output does: the cut test in
+`self-review-gate` (e) applies to skill and reference text too — if cutting a
+sentence would change no reader action, cut it.
 
 ## GC-50 — Description opens with the triggering situation
 
@@ -59,7 +63,10 @@ did not already match.
 
 - Frontmatter: name, trigger-first description, version, author,
   license, platforms, tags, related_skills.
-- Own free GC- block; rule IDs declared exactly once repo-wide.
+- Own free GC- block; rule IDs declared exactly once repo-wide. "Free" is measured
+  against CONTRIBUTING's range map, not against this file alone: a declared range
+  reserves its whole span, so a neighbour's unused number is still taken. Check the
+  map before allocating.
 - `references/` for entries the skill links (synced from docs/, never
   hand-edited); runnable scripts stay checkout-resident.
 - related_skills lists the skills this one pairs with at load time.
@@ -80,13 +87,29 @@ Facts that apply to one project (its layout, its quirks, its commands) load only
 
 When something you worked out is repeatable — a procedure, a diagnostic order, a pitfall with a fix — write it down as guidance in the same session, with the reason it works and the failure it prevents, not just the steps. The steps alone are re-derived at the same cost by the next reader; the reason is what lets them adapt it when the situation differs. Record the dead ends too: what was tried and ruled out saves the next attempt the same detour.
 
-## GC-58 — Adding a rule means deleting the wording it supersedes
+## GC-58 — One home per piece of guidance: supersede it, don't repeat it
 
 When a rule replaces an earlier one, the earlier text goes in the same change. Two versions left side by side — old sentence beside new, a note that contradicts the rule above it — make the reader obey whichever they read first, and the stale one looks equally current. Sediment accumulates quietly: each addition looks additive and the file drifts into saying several things at once. Making a change also means removing what it replaced.
+
+The same obligation covers a copy that was never a replacement: guidance written twice in different words, in another skill, another section, or a reference. Keep one copy at its owner — the skill whose ID block covers it — and cross-reference it by ID elsewhere. Two copies look equally current, so a reader follows whichever they meet first, and a later correction lands in only one of them. Guidance means a rule, a procedure, an example, or a verification step; repeated vocabulary, a shared term, and a name repeated for clarity are not duplicates — they are the form a cross-reference takes.
+
+Detection is a review pass, not a gate: long duplicated lines surface with the command under Verification. Read them and decide. A gate on this would fire on legitimate cross-reference phrases, which is why the rule lives here rather than in `check-hygiene.sh`.
+
+## GC-59 — Split a skill body by load frequency, not by topic
+
+A skill is read in order to act, and one use rarely needs everything in it. Keep resident what every use needs — the rule text, its trigger, the verification command, the one-line why. Move what only the hard case needs into `references/<topic>.md`: worked examples, long rationale, edge-case taxonomies, per-language detail, incident history, transcripts. Split by how often the material is needed, not by which subject it belongs to — the grouping that feels tidy is often the one needed on every use.
+
+- **The pointer stays hot.** A reference nobody is told to open is dead weight: the body keeps a routing line stating what the file holds and when to open it.
+- **Split evidence, never obligations.** GC-54's test decides — if a rule must be obeyed when its trigger fires, it belongs in the file loaded at that moment. A rule moved into a reference has been demoted to optional reading.
+- **Do not restate the budget.** Cite `./scripts/phases.py --phase N`; the signal of a good split is the hot file's cost dropping and the phase total dropping with it, because references are not in the phase lists.
+- **References are not hand-written.** They land as `docs/references/<name>.md` plus a `skills/references.manifest` line, so one canonical copy exists and install materializes it. Runnable scripts stay checkout-resident.
 
 ## Verification
 
 ```bash
 ./scripts/check-hygiene.sh HEAD
+grep -nE "owns GC-" CONTRIBUTING.md                                       # the range map: allocate outside every declared span
 grep -h "^description:" skills/*/SKILL.md | awk '{ print length($0) }'  # descriptions stay one line
+awk 'length($0)>=80' skills/*/SKILL.md | sed 's/^ *//' | sort | uniq -d   # duplicated guidance to read
+./scripts/phases.py --phase 4                                             # what a phase costs, from the source
 ```
