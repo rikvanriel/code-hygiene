@@ -97,7 +97,9 @@ Detection is a review pass, not a gate: long duplicated lines surface with the c
 
 ## GC-59 — Split a skill body by load frequency, not by topic
 
-A skill is read in order to act, and one use rarely needs everything in it. Keep resident what every use needs — the rule text, its trigger, the verification command, the one-line why. Move what only the hard case needs into `references/<topic>.md`: worked examples, long rationale, edge-case taxonomies, per-language detail, incident history, transcripts. Split by how often the material is needed, not by which subject it belongs to — the grouping that feels tidy is often the one needed on every use.
+A skill is read in order to act, and one use rarely needs everything in it. Keep resident what every use needs — the rule text, its trigger, the verification command, the one-line why, and one canonical invocation example per supported shape. Move what only the hard case needs into `references/<topic>.md`: worked examples, long rationale, edge-case taxonomies, per-language detail, incident history, transcripts. Split by how often the material is needed, not by which subject it belongs to — the grouping that feels tidy is often the one needed on every use.
+
+Prose describes, examples get copied — usually without reading the rest. A skill that prescribes an invocation carries the correct pattern copy-paste-ready; pitfalls back up the example, never substitute for it. A skill with warnings but no correct pattern is unfinished: the reader reconstructs the shape from prose and reconstructs it wrong.
 
 - **The pointer stays hot.** A reference nobody is told to open is dead weight: the body keeps a routing line stating what the file holds and when to open it.
 - **Split evidence, never obligations.** GC-54's test decides — if a rule must be obeyed when its trigger fires, it belongs in the file loaded at that moment. A rule moved into a reference has been demoted to optional reading.
