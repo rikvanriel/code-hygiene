@@ -54,6 +54,7 @@ Do not enumerate private names — ban classes, with `example.invalid` placehold
 3. **Internal tooling/process:** private scripts, cron jobs, internal ticket IDs, private CI job names, local-only wrappers — unless project documents them.
 4. **Cross-project references:** "like our fix in <other-repo>" unless direct documented dependency (import, API, shared lib). Upstream fix should stand alone.
 5. **Personal dev notes:** `TODO(<real-person>)`, "we do X in our infra", "for our perf lab", internal benchmark machine names.
+6. **Working-context shorthand and process narration:** step labels from a private plan (`phase-2 item`, `step B of the rollout`), bare first-name references (`the case <first-name> flagged`), and process verbs carrying no technical content (`review found three problems`, `as decided in sync`). Rewrite by naming the artifact — the function, contract, or finding — not the session it came from.
 
 **Why class-based:** Listing private names to ban them leaks them. Teach agent the class, use `example.invalid` in examples, never paste real private suffixes into skill or commit.
 
