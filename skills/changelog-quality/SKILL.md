@@ -51,6 +51,10 @@ Good: "Fix by having the offline path wait for pending work for the memcg before
 
 Split helper, sync bool, trylock vs mutex belong in code comments/doc, not changelog.
 
+### Forward references name the artifact, for purpose not status
+
+<!-- GC-14b --> A patch that exists for a later patch names what the later patch introduces — the function, helper, or contract — never the later patch's plan label or status. Bad: "switched to it in the next patch", "until step B lands", "a later change needs the same three lines" (names neither the change nor the lines, so in the committed log it points at nothing). Good: "cleans up the name space for adding a scoped-query variant". Justify a prep patch on its own terms: open with the problem that exists now, not with what a follow-up will do — at this patch that behavior does not exist yet, so stating it as motivation misleads a reviewer reading in order.
+
 ### GC-15 — Say what change does NOT do / its limits if non-trivial
 
 Scope guard: "Does not change behavior for GET", "No fast-path impact".

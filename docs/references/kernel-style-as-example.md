@@ -9,7 +9,7 @@
 - Phase model: Phase0 planning.md (non-trivial trigger), Phase1 coding.md always hot, Phase2 review.md + exemplars-routing mandatory before commit, Phase3 commit.md + changelog-style mandatory.
 - ID taxonomy: `R0-*` factual integrity, `CL-*` changelog, `CS-*` code structure, `CC-*` comments, plus `<!-- ID -->` matching hot ↔ cold rationale via `check-orphan-ids.py`.
 - Lint chain: `lint-changelog.py` (CL-12 50/70), `lint-code.py`, `checkpatch.pl --strict -g HEAD`, `verify-cover-letter.py`.
-- Generic distilled rules we re-used: WHY not WHAT 50-word cap, one source at definition, helper extraction by theme, should_/is_ bool naming, minimal obvious fix, one idea per paragraph.
+- Generic distilled rules we re-used: WHY not WHAT 50-word cap, one source at definition, helper extraction by theme, should_/is_ bool naming, minimal obvious fix, one idea per paragraph, forward references naming the artifact (GC-14b), working-context shorthand ban (upstream-hygiene class 6).
 
 ## License
 
