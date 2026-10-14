@@ -1,7 +1,7 @@
 ---
 name: change-splitting
-description: "Use when committing or splitting a large change — mixed subjects, mechanical change, buried helper, broken bisect."
-version: 1.0.2
+description: "Use when committing or splitting a large change — tests whether it splits into easy-to-review smaller changes: mixed subjects, mechanical change, buried helper, broken bisect."
+version: 1.0.3
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
