@@ -35,7 +35,7 @@ Document examination even when keeping together.
 
 Verification:
 ```bash
-git diff --stat HEAD~1 | awk 'NF>=3 && $1+$2 >=200 {print}'
+git diff --numstat HEAD~1 | awk '$1+$2 >= 200 {print}'  # --numstat puts added/deleted counts in $1/$2; --stat does not
 ```
 
 ## GC-32 — Thematic grouping, not interleaving

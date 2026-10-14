@@ -67,7 +67,8 @@ A 200 is not a value, exit code 0 is not a result, and a retry stub is not data:
 ```bash
 # Every number in the staged changelog must have a tool log backing it this session
 git log -1 --pretty=%B | grep -E "[0-9]+%|[0-9]+ms" && echo "VERIFY: number present -> needs cmd log in scratch/PR body" || echo "OK"
-git log -1 --pretty=%B | tr '\n' '\0' | xargs -0 -I{} sh -c 'echo "{}" | grep -oE "[a-f0-9]{7,40}" | while read h; do git show --oneline -s $h 2>&1 >/dev/null || echo "FAIL: hash $h not found"; done; echo OK'
+fails=$(git log -1 --pretty=%B | tr '\n' '\0' | xargs -0 -I{} sh -c 'echo "{}" | grep -oE "[a-f0-9]{7,40}"' | while read h; do git show --oneline -s $h 2>&1 >/dev/null || echo "FAIL: hash $h not found"; done)
+[ -z "$fails" ] && echo OK || echo "$fails"
 ```
 
 ## Anti-patterns

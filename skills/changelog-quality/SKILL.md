@@ -21,7 +21,7 @@ metadata:
 
 Verification:
 ```bash
-head -n1 <<< "$(git log -1 --pretty=%B)" | wc -c  # ≤50
+head -n1 <<< "$(git log -1 --pretty=%B)" | tr -d '\n' | wc -m  # ≤50 (chars, newline stripped)
 ```
 
 ## Body
@@ -90,9 +90,9 @@ When a change brings in code that originated elsewhere — another project, anot
 ## Verification
 
 ```bash
-git log -1 --pretty=%B > "$TMPDIR/msg"
-awk 'NR==1{print length": "$0} length>50 && NR==1{print "FAIL subject >50"}' "$TMPDIR/msg"
-./scripts/check-hygiene.sh --msg "$TMPDIR/msg" 2>&1 | head -n 20
+git log -1 --pretty=%B > "${TMPDIR:-/tmp}/msg"
+awk 'NR==1{print length": "$0} length>50 && NR==1{print "FAIL subject >50"}' "${TMPDIR:-/tmp}/msg"
+./scripts/check-hygiene.sh --msg "${TMPDIR:-/tmp}/msg" 2>&1 | head -n 20
 ```
 
 ## Anti-patterns → rewrite
