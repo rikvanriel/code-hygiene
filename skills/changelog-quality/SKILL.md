@@ -15,7 +15,7 @@ metadata:
 
 ## Subject line
 
-<!-- GC-10 --> Imperative, present tense, ≤50 chars. E.g. "Fix open redirect on login POST via crafted next_url". No "This patch..." or "Adds/fixes" — verb first.
+<!-- GC-10 --> Imperative, present tense, ≤50 chars. E.g. "Fix open redirect on login POST via next_url". No "This patch..." or "Adds/fixes" — verb first.
 
 <!-- GC-10b --> If project uses conventional commits, defer to that spec (see `references/conventional-commits.md` stub). GC-10 applies only when project has no subject spec.
 
@@ -67,7 +67,7 @@ Scope guard: "Does not change behavior for GET", "No fast-path impact".
 
 ### GC-17 — Generic length gate
 
-No CL-12 50/70 exact — use 50 char subject aim, 72 body wrap convention when project doesn't specify otherwise.
+Use 50 char subject aim, 72 body wrap convention when project doesn't specify otherwise.
 
 ### GC-18 — Verify substantive technical claims
 
