@@ -1,13 +1,13 @@
 ---
 name: change-splitting
-description: "Use when a diff mixes subjects, hides a mechanical change, buries a helper, or breaks bisect. One idea per unit."
-version: 1.0.0
+description: "Use when splitting a large change into reviewable commits — mixed subjects, mechanical change, buried helper, or broken bisect."
+version: 1.0.1
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [split, bisect, large, mixed, seams, series, rename, removal, dangling]
+    tags: [large, review, mixed, stack, seams, series, rename, removal, dangling]
     related_skills: [changelog-quality, code-structure, factual-integrity, project-discovery]
 ---
 
