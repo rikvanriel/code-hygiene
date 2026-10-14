@@ -1,13 +1,13 @@
 ---
 name: comment-quality
-description: "Use when comments or docstrings drift from the code: stale, retracted, or lacking WHY."
-version: 1.0.1
+description: "Use when writing or reviewing comments and docstrings — new, stale, or lacking WHY."
+version: 1.0.2
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [stale, why, useless, misleading, retracted, docstring, removed]
+    tags: [stale, why, writing, useless, misleading, retracted, docstring, removed]
     related_skills: [code-structure, changelog-quality, upstream-hygiene]
 ---
 
