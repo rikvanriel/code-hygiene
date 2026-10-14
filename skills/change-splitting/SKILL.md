@@ -1,13 +1,13 @@
 ---
 name: change-splitting
-description: "Use when splitting a large change into reviewable commits — mixed subjects, mechanical change, buried helper, or broken bisect."
-version: 1.0.1
+description: "Use when committing or splitting a large change — mixed subjects, mechanical change, buried helper, broken bisect."
+version: 1.0.2
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [large, review, mixed, stack, seams, series, rename, removal, dangling]
+    tags: [large, review, commit, stack, seams, series, rename, removal, dangling]
     related_skills: [changelog-quality, code-structure, factual-integrity, project-discovery]
 ---
 
