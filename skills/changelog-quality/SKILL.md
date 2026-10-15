@@ -1,13 +1,13 @@
 ---
 name: changelog-quality
-description: "Use when drafting or reviewing a commit message, changelog entry, cover letter, or PR description. States problem, cause, fix invariant."
-version: 1.0.0
+description: "Use when drafting or reviewing a commit message, changelog entry, diff summary, test plan, cover letter, or PR description. States problem, cause, fix invariant."
+version: 1.0.1
 author: code-hygiene contributors
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
-    tags: [commit, pr, cover-letter, review, message]
+    tags: [commit, pr, cover-letter, review, message, test-plan, summary]
     related_skills: [factual-integrity, upstream-hygiene, comment-quality]
 ---
 
@@ -39,6 +39,10 @@ Rewrite over-bulleting:
 - Problem: plain paragraph.
 - Cause: "When X, A→B because C" one sentence present tense.
 - Fix: one sentence invariant + what change trades. Impl details belong in code comment, not changelog.
+
+### GC-12b — Summary and Test Plan share these rules
+
+Diff Summary carries problem → fix under GC-11..GC-15. Test Plan carries verification under the same prose rules (GC-12, GC-17, anti-patterns): what ran and passed, what did not run and why, plus any post-land check. Neither field restates the other.
 
 ### GC-13 — When fixing a gap that other paths already handle, name the contrast
 
