@@ -79,6 +79,22 @@ Never pull an unbounded output into your working context: filter to counts, rang
 
 When a model (or a pipeline containing one) produces the evidence, verify it claim by claim against the primary source, re-derive any list it produced by querying the data, and set an explicit abort threshold for when its output is not good enough to use. Keep the gathering step deterministic and let the model only summarize. A list of "everything that X" must come from a query plus its count, never from a model's or your own remembered subset. Record the dead ends as you go: a ruled-out avenue with where it was confirmed is the most valuable note in the report, and it is lost if it is only batched at the end.
 
+### GC-74 — When the metric and the observation disagree, the metric is guilty until proven innocent
+
+A scalar metric can improve substantially while the artifact is destroyed. Direct observation of the artifact outranks any number: when they disagree, stop tuning to the metric, find the mechanism the metric is actually rewarding, and either fix the metric or demote it to a secondary signal behind the observation.
+
+### GC-75 — Calibrate against a fixed physical scale, never per-sample self-normalization
+
+Normalizing a confidence or score by each sample's own percentiles promotes the noisiest void pixel to 1.0 and guarantees false confidence exactly where there is no signal. Anchor to a measured physical scale (a gradient in DN/px, a noise floor in the instrument's units) so that absence of signal reads as absence of confidence on every sample.
+
+### GC-76 — When the human is the instrument, burn coordinates into the artifact
+
+A human judge reports adjectives ('further apart', 'near the top'); an estimator reports numbers. When verification needs a human eye — offsets, separations, positions of copies — overlay a labelled coordinate grid on the image under judgment so the report comes back as measurements that feed directly into the fix. Adjectives restart the loop; numbers close it.
+
+### GC-77 — Synthetic fixtures must satisfy the code's preconditions
+
+A known-answer fixture that violates the code's operating preconditions measures an unfaithful regime: a global shift fed to a blender that assumes same-scene agreement, or a test copy placed where the validity mask never covers. When a fixture fails, check the fixture's preconditions before the code — build copies inside the valid region, hold the agreements the algorithm assumes — else the failure indicts the test, not the change.
+
 ## Verification
 
 ```bash

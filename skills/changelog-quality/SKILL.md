@@ -97,6 +97,10 @@ When a change brings in code that originated elsewhere — another project, anot
 git log -1 --pretty=%B > "${TMPDIR:-/tmp}/msg"
 awk 'NR==1{print length": "$0} length>50 && NR==1{print "FAIL subject >50"}' "${TMPDIR:-/tmp}/msg"
 ./scripts/check-hygiene.sh --msg "${TMPDIR:-/tmp}/msg" 2>&1 | head -n 20
+# Series audit before submitting a stack: every subject, not just HEAD.
+git log --format='%h %s' origin/main..HEAD | while read h s; do
+  n=$(git log -1 --format=%s $h | wc -m); [ $((n-1)) -gt 50 ] && echo "$h LONG: $s"
+done
 ```
 
 ## Anti-patterns → rewrite

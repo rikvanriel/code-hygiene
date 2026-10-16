@@ -88,6 +88,9 @@ Converged = one full iteration no new finding across all 4. Trend shrinking -> k
 ```bash
 ./scripts/check-hygiene.sh HEAD
 ./scripts/phases.py --phase 2 --profile full 2>&1 | tail -n 20
+# Churn check: per-commit summed additions vs series-net per file.
+# sum+ >> net+ means an early patch introduced code a later patch
+# removed — squash candidate (GC-34: never introduce-then-fix in-series).
 ```
 
 ## Related
