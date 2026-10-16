@@ -67,6 +67,10 @@ A run that changes nothing shows what the reading looks like when nothing is wro
 
 When a component is opaque, make it observable — log its real input, output and environment — instead of reasoning about what it probably did. Prove a path end-to-end with a known input (a value whose correct result you know) before forming a theory about it, and keep that probe as a regression test: it separates "the path does what I asked" from "the path does something else", which no amount of reading the code settles.
 
+### GC-73 — Span the stages the fix spans
+
+Unit tests pin each stage, but the bug lives between them: coordinate frames, polarity, units, and sampling conventions are agreed pairwise between functions, and no single-function test sees the agreement break. When a fix touches a composition (field estimator into window builder into resampler into merge), the regression test must run the same composition on a synthetic input with a known answer — not the stages in isolation. The test must fail on the old shape and pass on the new one; a spanning test that passes both ways pins nothing. One spanning test over the composed path beats a unit test per stage for this class.
+
 ### GC-71 — Keep the evidence bounded and durable
 
 Never pull an unbounded output into your working context: filter to counts, ranges, and the anomalous tail before reading. Write findings to durable storage as they are produced — intermediate results, probe outputs and the numbers behind a claim — because the context is not a store, and a claim whose evidence existed only in a context that has since been compressed is unverifiable. Each result should be persisted when produced, not batched at the end, and a re-run should skip units already completed.
@@ -96,6 +100,7 @@ grep -c "DONE" run.log 2>/dev/null || echo "no completion marker -> report as mi
 | Comparison with two variables changed | One factor per arm, other conditions stated as held |
 | "Too noisy to tell" from a single reading | Repeat, report spread, or report the comparison as inconclusive |
 | Value from a run killed by timeout | Reported as missing, with the timeout named |
+| Spanning test passing on old and new shape | Fails old, passes new — a test passing both ways pins nothing |
 
 ## Related
 
